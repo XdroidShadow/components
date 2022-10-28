@@ -12,28 +12,23 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import com.xd.spring.beans.XdDmfLoginBean;
-import com.xd.spring.httpRequest.XDHttpClient;
-import com.xd.spring.httpRequest.exception.XDHttpErrType;
-import com.xd.spring.httpRequest.listener.XDDownloadListener;
-import com.xd.spring.httpRequest.listener.MKDataListener;
-import com.xd.spring.httpRequest.listener.XDJsonHandle;
-import com.xd.spring.httpRequest.request.XDLoginBean;
-import com.xd.spring.httpRequest.request.XDRequest;
 import com.xd.spring.ui.view.XDViewTouch;
+import com.xdroid.spring.httpRequest.XDHttpClient;
+import com.xdroid.spring.httpRequest.exception.XDHttpErrType;
+import com.xdroid.spring.httpRequest.listener.XDDownloadListener;
+import com.xdroid.spring.httpRequest.listener.MKDataListener;
+import com.xdroid.spring.httpRequest.request.XDRequest;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.xd.spring.httpRequest.listener.XDJsonHandle.createFileHandler;
-import static com.xd.spring.httpRequest.listener.XDJsonHandle.createJsonHandler;
-import static com.xd.spring.httpRequest.request.XDRequest.createGetRequest;
-import static com.xd.spring.httpRequest.request.XDRequest.createPostJSONRequest;
-import static com.xd.spring.httpRequest.request.XDRequest.createPostRequest;
+import static com.xdroid.spring.httpRequest.listener.XDJsonHandle.createFileHandler;
+import static com.xdroid.spring.httpRequest.listener.XDJsonHandle.createJsonHandler;
+import static com.xdroid.spring.httpRequest.request.XDRequest.createGetRequest;
+import static com.xdroid.spring.httpRequest.request.XDRequest.createPostJSONRequest;
+import static com.xdroid.spring.httpRequest.request.XDRequest.createPostRequest;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
