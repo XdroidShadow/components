@@ -50,6 +50,6 @@ dependencies {
 //https://git.aispeech.com.cn/jinxian.gong/xdroid/-/releases/v1.1.1
 //    implementation 'com.git.aispeech.com.cn.jinxian.gong:xdroid:v1.1.1'
 //    implementation 'https.git.aispeech.com.cn.jinxian.gong:xdroid:v1.1.1'
-    implementation 'com.github.XdroidShadow:components:v1.1.0'
+//    implementation 'com.github.XdroidShadow:components:v1.1.0'
 //    implementation project(path: ':spring')
 }
