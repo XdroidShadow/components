@@ -1,4 +1,4 @@
-package com.xdroid.spring.example.android.mytablayout;
+package com.xdroid.spring.example.android.ui.mytablayout;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xdroid.spring.R;
 
-public class ListFragment extends Fragment {
+public class TEST_ListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
 
@@ -25,6 +25,6 @@ public class ListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
-        mRecyclerView.setAdapter(new RecyclerViewAdapter(getActivity()));
+        mRecyclerView.setAdapter(new TEST_RecyclerViewAdapter(getActivity()));
     }
 }

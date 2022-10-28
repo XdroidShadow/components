@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-public class TSHNetTool {
+public class XDNetTool {
     private static final String TAG = "TSHNetTool";
 
 

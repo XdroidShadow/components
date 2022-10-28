@@ -1,4 +1,4 @@
-package com.xdroid.spring.example.android.ui.view;
+package com.xdroid.spring.example.android.ui.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Scroller;
 
-public class XDHorizontal extends ViewGroup {
+/**
+ *   手势冲突的处理 - 水平滚动布局 + vertical方向的listview
+ */
+public class TEST_HorizontalViewGroup extends ViewGroup {
 
     private int lastX;
     private int lastY;
@@ -19,15 +22,15 @@ public class XDHorizontal extends ViewGroup {
     private VelocityTracker tracker;
     private int lastInterceptX=0;
     private int lastInterceptY=0;
-    public XDHorizontal(Context context) {
+    public TEST_HorizontalViewGroup(Context context) {
         super(context);
         init();
     }
-    public XDHorizontal(Context context, AttributeSet attrs) {
+    public TEST_HorizontalViewGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-    public XDHorizontal(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TEST_HorizontalViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -38,7 +41,7 @@ public class XDHorizontal extends ViewGroup {
     }
 
     /**
-     *   拦截手势
+     *   通过判断滑动类型进行手势拦截
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
@@ -125,6 +128,9 @@ public class XDHorizontal extends ViewGroup {
         return true;
     }
 
+    /**
+     *   测量view的尺寸
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -153,7 +159,7 @@ public class XDHorizontal extends ViewGroup {
     }
 
     /**
-     *   使用 Scroller 进行
+     *   使用 Scroller 进行滑动动画
      */
     @Override
     public void computeScroll() {
@@ -165,13 +171,16 @@ public class XDHorizontal extends ViewGroup {
     }
 
     /**
-     *   滑动
+     *   开始滑动
      */
     public void smoothScrollTo(int destX, int destY) {
         scroller.startScroll(getScrollX(), getScrollY(), destX - getScrollX(), destY - getScrollY(), 1000);
         invalidate();
     }
 
+    /**
+     *   确定view的位置
+     */
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int childCount = getChildCount();

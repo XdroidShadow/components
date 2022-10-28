@@ -77,7 +77,7 @@
                 android:background="@color/whitesmoke"
                 android:orientation="vertical">
 
-                <com.xdroid.spring.example.android.ui.view.XDViewTouch
+                <com.xdroid.spring.example.android.ui.customview.TEST_ViewTouch
                     android:id="@+id/xdViewTouch"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
@@ -89,7 +89,7 @@
 
             </LinearLayout>
 
-            <com.xdroid.spring.example.android.ui.view.XDTextView
+            <com.xdroid.spring.example.android.ui.customview.TEST_TextView
                 android:layout_width="200dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
@@ -100,7 +100,7 @@
                 android:visibility="gone" />
 
 
-            <com.xdroid.spring.example.android.ui.view.XDView
+            <com.xdroid.spring.example.android.ui.customview.TEST_CustomView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -112,7 +112,7 @@
 
 
             <!--    测试手势冲突-->
-            <com.xdroid.spring.example.android.ui.view.XDHorizontal
+            <com.xdroid.spring.example.android.ui.customview.TEST_HorizontalViewGroup
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone">
@@ -126,11 +126,11 @@
                     android:id="@+id/lv_two"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-            </com.xdroid.spring.example.android.ui.view.XDHorizontal>
+            </com.xdroid.spring.example.android.ui.customview.TEST_HorizontalViewGroup>
 
 
 
-            <com.xdroid.spring.example.android.ui.view.XDMeasureView
+            <com.xdroid.spring.example.android.ui.customview.TEST_MeasureView
                 android:layout_marginTop="10dp"
                 android:layout_width="200sp"
                 android:layout_height="20dp"
@@ -139,7 +139,7 @@
 
 
 
-            <com.xdroid.spring.example.android.ui.view.XDMeasureView
+            <com.xdroid.spring.example.android.ui.customview.TEST_MeasureView
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"

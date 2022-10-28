@@ -1,4 +1,4 @@
-package com.xdroid.spring.example.android.mytablayout;
+package com.xdroid.spring.example.android.ui.mytablayout;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xdroid.spring.R;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class TEST_RecyclerViewAdapter extends RecyclerView.Adapter<TEST_RecyclerViewAdapter.ViewHolder> {
 
     private Context mContext;
 
-    public RecyclerViewAdapter(Context mContext) {
+    public TEST_RecyclerViewAdapter(Context mContext) {
         this.mContext = mContext;
     }
 

@@ -1,4 +1,4 @@
-package com.xdroid.spring.example.android.ui.view;
+package com.xdroid.spring.example.android.ui.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,16 +8,19 @@ import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
 
-public class XDTextView extends androidx.appcompat.widget.AppCompatTextView {
-    public XDTextView(Context context) {
+/**
+ *   extends 系统组件进行自定义
+ */
+public class TEST_TextView extends androidx.appcompat.widget.AppCompatTextView {
+    public TEST_TextView(Context context) {
         super(context);
     }
 
-    public XDTextView(Context context, @Nullable AttributeSet attrs) {
+    public TEST_TextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public XDTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TEST_TextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

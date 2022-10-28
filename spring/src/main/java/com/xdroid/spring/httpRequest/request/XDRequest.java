@@ -25,7 +25,7 @@ import okhttp3.RequestBody;
  */
 public class XDRequest {
     public static Gson gson = new Gson();
-    private static final String TAG = "MKRequest";
+    private static final String TAG = "XDRequest";
 
     /**
      * 创建带参数的请求（post）

@@ -1,4 +1,4 @@
-package com.xdroid.spring.example.android.ui.view;
+package com.xdroid.spring.example.android.ui.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,22 +7,22 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-public class XDMeasureView extends View {
+public class TEST_MeasureView extends View {
     private static final String TAG = "XDMeasureView";
 
-    public XDMeasureView(Context context) {
+    public TEST_MeasureView(Context context) {
         super(context);
     }
 
-    public XDMeasureView(Context context, @Nullable AttributeSet attrs) {
+    public TEST_MeasureView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public XDMeasureView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TEST_MeasureView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public XDMeasureView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TEST_MeasureView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

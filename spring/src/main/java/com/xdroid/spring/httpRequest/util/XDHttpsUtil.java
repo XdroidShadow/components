@@ -23,7 +23,7 @@ import javax.net.ssl.X509TrustManager;
 /**
  *  https的支持设置
  */
-public class MKHttpsUtil {
+public class XDHttpsUtil {
     public static SSLSocketFactory getSslSocketFactory(InputStream[] certificates, InputStream bksFile, String password) {
         try {
             TrustManager[] trustManagers = prepareTrustManager(certificates);

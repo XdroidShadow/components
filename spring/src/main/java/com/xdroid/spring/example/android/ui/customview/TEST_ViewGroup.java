@@ -1,24 +1,24 @@
-package com.xdroid.spring.example.android.ui.view;
+package com.xdroid.spring.example.android.ui.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
-public class XDGroup extends ViewGroup {
-    public XDGroup(Context context) {
+public class TEST_ViewGroup extends ViewGroup {
+    public TEST_ViewGroup(Context context) {
         super(context);
     }
 
-    public XDGroup(Context context, AttributeSet attrs) {
+    public TEST_ViewGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public XDGroup(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TEST_ViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public XDGroup(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TEST_ViewGroup(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
 

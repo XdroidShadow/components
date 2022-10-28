@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.xdroid.spring.httpRequest.cookie.SimpleCookieJar;
 import com.xdroid.spring.httpRequest.listener.XDJsonHandle;
-import com.xdroid.spring.httpRequest.response.MKFileCallback;
-import com.xdroid.spring.httpRequest.util.MKHttpsUtil;
+import com.xdroid.spring.httpRequest.response.XDFileCallback;
+import com.xdroid.spring.httpRequest.util.XDHttpsUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,7 +78,7 @@ public class XDHttpClient {
         //允许重定向
         okHttpClientBuilder.followRedirects(true);
         //设置https的支持
-        okHttpClientBuilder.sslSocketFactory(MKHttpsUtil.initSSLSocketFactory(), MKHttpsUtil.initTrustManager());
+        okHttpClientBuilder.sslSocketFactory(XDHttpsUtil.initSSLSocketFactory(), XDHttpsUtil.initTrustManager());
         mOkHttpClient = okHttpClientBuilder.build();
     }
 
@@ -119,7 +119,7 @@ public class XDHttpClient {
     public static Call downloadFile(Request request, XDJsonHandle<File> handle) {
         Log.e("下载进度","downloadFile");
         Call call = mOkHttpClient.newCall(request);
-        call.enqueue(new MKFileCallback(handle));
+        call.enqueue(new XDFileCallback(handle));
         return call;
     }
 

@@ -1,4 +1,4 @@
-package com.xdroid.spring.example.android.ui.view;
+package com.xdroid.spring.example.android.ui.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,27 +14,28 @@ import androidx.annotation.Nullable;
 import com.xdroid.spring.R;
 
 
-public class XDView extends View {
+public class TEST_CustomView extends View {
     private static final String TAG = "XDView";
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    public XDView(Context context) {
+    public TEST_CustomView(Context context) {
         super(context);
     }
 
-    public XDView(Context context, @Nullable AttributeSet attrs) {
+    public TEST_CustomView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        //自定义属性
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.XDView);
         int color = typedArray.getColor(R.styleable.XDView_innerColor, Color.RED);//获取属性值
         setPaint(color);//使用值
         typedArray.recycle();//回收资源
     }
 
-    public XDView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TEST_CustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public XDView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TEST_CustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
@@ -53,6 +54,7 @@ public class XDView extends View {
         int paddingRight = getPaddingRight();
         int paddingBottom = getPaddingBottom();
 
+        //处理padding
         canvas.drawRect(paddingLeft, paddingTop, getWidth() - paddingRight,
                 getHeight() - paddingBottom, paint);
     }
@@ -96,6 +98,7 @@ public class XDView extends View {
                 break;
         }
 
+        //处理warp_content属性
         //AT_MOST 就是 wrap_content
         widthSize = (widthMode == MeasureSpec.AT_MOST) ? defaultWidth : widthSize;
         heightSize = (heightMode == MeasureSpec.AT_MOST) ? defaultHeight : heightSize;

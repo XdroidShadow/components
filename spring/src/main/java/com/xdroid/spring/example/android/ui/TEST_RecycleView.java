@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 import java.util.Arrays;
 import java.util.List;
 
-public class XDRecycleView extends AppCompatActivity {
+public class TEST_RecycleView extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     @Override

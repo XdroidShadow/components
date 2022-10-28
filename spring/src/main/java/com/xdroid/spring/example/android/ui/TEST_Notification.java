@@ -24,14 +24,14 @@ import static android.content.Context.NOTIFICATION_SERVICE;
  *   怎么操作RemoteViews中的view?
  *
  */
-public class XDNotification {
+public class TEST_Notification {
 
     /**
      * 普通式通知
      */
     public static void testNotification1(Context context) {
 //        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("www.baidu.com"));
-        Intent intent = new Intent(context, XDRecycleView.class);
+        Intent intent = new Intent(context, TEST_RecycleView.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         String channelId = "xdroid_1";
@@ -60,7 +60,7 @@ public class XDNotification {
      */
     public static void testNotification2(Context context) {
 //        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("www.baidu.com"));
-        Intent intent = new Intent(context, XDRecycleView.class);
+        Intent intent = new Intent(context, TEST_RecycleView.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         //折叠自定义view
@@ -95,10 +95,10 @@ public class XDNotification {
      * 悬挂式通知
      */
     public static void testNotification3(Context context) {
-        Intent intent = new Intent(context, XDRecycleView.class);
+        Intent intent = new Intent(context, TEST_RecycleView.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, FLAG_CANCEL_CURRENT);
 
-        Intent intentHang = new Intent(context, XDRecycleView.class);
+        Intent intentHang = new Intent(context, TEST_RecycleView.class);
         intentHang.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent pendingIntentHang = PendingIntent.getActivity(context, 0, intentHang, FLAG_CANCEL_CURRENT);
@@ -127,10 +127,10 @@ public class XDNotification {
 
 
     public static Notification productNotification(Context context){
-        Intent intent = new Intent(context, XDRecycleView.class);
+        Intent intent = new Intent(context, TEST_RecycleView.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, FLAG_CANCEL_CURRENT);
 
-        Intent intentHang = new Intent(context, XDRecycleView.class);
+        Intent intentHang = new Intent(context, TEST_RecycleView.class);
         intentHang.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent pendingIntentHang = PendingIntent.getActivity(context, 0, intentHang, FLAG_CANCEL_CURRENT);

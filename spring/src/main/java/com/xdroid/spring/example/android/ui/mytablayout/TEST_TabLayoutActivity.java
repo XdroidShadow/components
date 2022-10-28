@@ -1,4 +1,4 @@
-package com.xdroid.spring.example.android.mytablayout;
+package com.xdroid.spring.example.android.ui.mytablayout;
 
 import android.os.Bundle;
 
@@ -14,7 +14,7 @@ import com.xdroid.spring.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabLayoutActivity extends AppCompatActivity {
+public class TEST_TabLayoutActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
@@ -51,10 +51,10 @@ public class TabLayoutActivity extends AppCompatActivity {
         }
         List<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < titles.size(); i++) {
-            fragments.add(new ListFragment());
+            fragments.add(new TEST_ListFragment());
         }
-        FragmentAdapter mFragmentAdapteradapter =
-                new FragmentAdapter(getSupportFragmentManager(), fragments, titles);
+        TEST_FragmentAdapter mFragmentAdapteradapter =
+                new TEST_FragmentAdapter(getSupportFragmentManager(), fragments, titles);
         //给ViewPager设置适配器
         mViewPager.setAdapter(mFragmentAdapteradapter);
         //将TabLayout和ViewPager关联起来。

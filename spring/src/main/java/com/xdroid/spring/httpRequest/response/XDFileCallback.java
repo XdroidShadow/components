@@ -23,8 +23,8 @@ import okhttp3.Response;
 /**
  * 文件下载回调
  */
-public class MKFileCallback implements Callback {
-    private static final String TAG = "MKFileCallback";
+public class XDFileCallback implements Callback {
+    private static final String TAG = "XDFileCallback";
     protected final int NETWORK_ERROR = -1; //  network  error
     protected final int IO_ERROR = -2; //  JSON  error
     protected final String EMPTY_MSG = "";
@@ -37,7 +37,7 @@ public class MKFileCallback implements Callback {
     private final String mFilePath;
     private int mProgress;
 
-    public MKFileCallback(XDJsonHandle<File> handle) {
+    public XDFileCallback(XDJsonHandle<File> handle) {
         this.mListener = (XDDownloadListener) handle.mListener;
         this.mFilePath = handle.mSource;
         this.mainHandler = new Handler(Looper.getMainLooper()) {

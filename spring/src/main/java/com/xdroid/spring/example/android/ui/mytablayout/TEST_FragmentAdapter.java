@@ -1,15 +1,15 @@
-package com.xdroid.spring.example.android.mytablayout;
+package com.xdroid.spring.example.android.ui.mytablayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-public class FragmentAdapter extends FragmentStatePagerAdapter {
+public class TEST_FragmentAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> mFragments;
     private List<String> mTitles;
 
-    public FragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    public TEST_FragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(fm);
         mFragments = fragments;
         mTitles = titles;

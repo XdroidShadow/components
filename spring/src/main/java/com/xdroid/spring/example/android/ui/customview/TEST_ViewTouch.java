@@ -1,4 +1,4 @@
-package com.xdroid.spring.example.android.ui.view;
+package com.xdroid.spring.example.android.ui.customview;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -22,27 +22,27 @@ import com.xdroid.spring.R;
  * 自定义view
  * 改变view位置的几种方法
  */
-public class XDViewTouch extends View {
+public class TEST_ViewTouch extends View {
     private static final String TAG = "XDViewTouch";
     private float lastX;
     private float lastY;
     private Scroller scroller;
 
 
-    public XDViewTouch(Context context) {
+    public TEST_ViewTouch(Context context) {
         super(context);
     }
 
-    public XDViewTouch(Context context, @Nullable AttributeSet attrs) {
+    public TEST_ViewTouch(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         scroller = new Scroller(context, new OvershootInterpolator());
     }
 
-    public XDViewTouch(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TEST_ViewTouch(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public XDViewTouch(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TEST_ViewTouch(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
@@ -62,6 +62,7 @@ public class XDViewTouch extends View {
                 int offsetX = (int) (x - lastX);
                 int offsetY = (int) (y - lastY);
 
+                //让view移动
                 //1使用layout()方法
 //                byLayoutFun(offsetX,offsetY);
 
@@ -115,7 +116,7 @@ public class XDViewTouch extends View {
      */
     private void anim(Context context) {
         Log.e(TAG, "anim alpha");
-        XDViewTouch viewTouch = null;
+        TEST_ViewTouch viewTouch = null;
 
         //view动画
         viewTouch.startAnimation(AnimationUtils.loadAnimation(context, R.anim.translate));

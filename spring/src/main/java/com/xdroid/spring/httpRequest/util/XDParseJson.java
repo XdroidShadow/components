@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  *   解析json
  */
-public class MKParseJson {
+public class XDParseJson {
 
     public static Object toModule(String jsonContent, Class<?> clazz) {
         Object moduleObj = null;

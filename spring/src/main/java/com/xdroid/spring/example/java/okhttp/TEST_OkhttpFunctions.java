@@ -1,4 +1,4 @@
-package com.xdroid.spring.example.java;
+package com.xdroid.spring.example.java.okhttp;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,12 +17,26 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class XDOkhttpTest {
+/**
+ MediaType.parse("text/x-markdown;&nbsp;charset=utf-8");  文本
+ MediaType.parse("application/json;&nbsp;charset=utf-8");  json
+ MediaType.parse("image/png");
+
+ MediaType.parse("application/octet-stream")
+ 未知的应用程序文件，浏览器一般不会自动执行或询问执行。
+ 类似设置了HTTP头Content-Disposition为attachment，即浏览器会触发下载行为。
+
+ 详细类型
+ http://www.iana.org/assignments/media-types/media-types.xhtml
+ */
+public class TEST_OkhttpFunctions {
     OkHttpClient mOkHttpClient = null;
 
 
     public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
     public static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+
+
 
     public void test() {
         //异步上传文件
