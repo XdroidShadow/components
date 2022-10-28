@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 
 import com.xd.spring.R;
-import com.xdroid.spring.httpRequest.XDHttpClient;
 
 import java.util.HashMap;
 
@@ -22,6 +21,7 @@ public class IndexActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        XDTests.test();
     }
 
 }
