@@ -1,36 +1,18 @@
-package com.xd.spring;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
+package com.xdroid.spring.example;
 
 import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.xd.spring.beans.XdDmfLoginBean;
-import com.xd.spring.ui.view.XDViewTouch;
-//import com.xdroid.spring.httpRequest.XDHttpClient;
-//import com.xdroid.spring.httpRequest.exception.XDHttpErrType;
-//import com.xdroid.spring.httpRequest.listener.XDDownloadListener;
-//import com.xdroid.spring.httpRequest.listener.MKDataListener;
-//import com.xdroid.spring.httpRequest.request.XDRequest;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import com.xdroid.spring.R;
 
-//import static com.xdroid.spring.httpRequest.listener.XDJsonHandle.createFileHandler;
-//import static com.xdroid.spring.httpRequest.listener.XDJsonHandle.createJsonHandler;
-//import static com.xdroid.spring.httpRequest.request.XDRequest.createGetRequest;
-//import static com.xdroid.spring.httpRequest.request.XDRequest.createPostJSONRequest;
-//import static com.xdroid.spring.httpRequest.request.XDRequest.createPostRequest;
-
-public class MainActivity extends AppCompatActivity {
+public class TestExampleActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -39,12 +21,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar tb = findViewById(R.id.xdToolBar);
-        setSupportActionBar(tb);
-        getSupportActionBar().setTitle("XDroid");
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
         requestPermissions(null, 1);
+
 
 //        test2();
 
@@ -71,23 +51,6 @@ public class MainActivity extends AppCompatActivity {
      * View的滑动
      */
     public void test() {
-        XDViewTouch xdViewTouch = findViewById(R.id.xdViewTouch);
-
-//        xdViewTouch.setOnClickListener((v) -> {
-//            Log.e(TAG, "test: 点击事件");
-//        });
-//        xdViewTouch.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                Log.e(TAG, "test: setOnTouchListener");
-//                return true;
-//            }
-//        });
-
-        findViewById(R.id.xdTranslate).setOnClickListener(v -> {
-            xdViewTouch.smoothScrollToX(-400, -100);
-        });
-
 
     }
 

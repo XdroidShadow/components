@@ -12,8 +12,6 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.xd.spring.ui.XDNotification;
-
 public class XDService extends Service {
     private static final String TAG = "XDService";
 
@@ -34,8 +32,8 @@ public class XDService extends Service {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private void setForeground() {
-        Notification notification = XDNotification.productNotification(this);
-        startForeground(1, notification);
+//        Notification notification = XDNotification.productNotification(this);
+//        startForeground(1, notification);
     }
 
     @Override
