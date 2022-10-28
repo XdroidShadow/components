@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  *   cookie回调
  */
-public interface MKCookieListener extends MKDataListener
+public interface XDCookieListener extends XDDataListener
 {
 	public void onCookie(ArrayList<String> cookieStrLists);
 }

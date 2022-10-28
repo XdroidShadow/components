@@ -4,7 +4,7 @@ import com.xdroid.spring.httpRequest.exception.XDHttpErrType;
 /**
  *   数据回调类
  */
-public interface MKDataListener<T> {
+public interface XDDataListener<T> {
 
 	/**
 	 * 请求成功回调事件处理

@@ -24,19 +24,19 @@ import okhttp3.Response;
 public class XDJsonHandle<T> implements Callback {
     // UI线程
     private Handler mainHandler;
-    public MKDataListener<T> mListener;
+    public XDDataListener<T> mListener;
     //解析的bean
     public Class<T> mClass = null;
     //文件
     public String mSource = null;
 
-    private XDJsonHandle(Class<T> clazz, MKDataListener<T> listener) {
+    private XDJsonHandle(Class<T> clazz, XDDataListener<T> listener) {
         this.mClass = clazz;
         this.mListener = listener;
         initHandler();
     }
 
-    private XDJsonHandle(String source, MKDataListener<T> listener) {
+    private XDJsonHandle(String source, XDDataListener<T> listener) {
         this.mSource = source;
         this.mListener = listener;
         initHandler();
@@ -46,7 +46,7 @@ public class XDJsonHandle<T> implements Callback {
         this.mainHandler = new Handler(Looper.getMainLooper());
     }
 
-    public static <V> XDJsonHandle<V> createJsonHandler(Class<V> clazz, MKDataListener<V> listener) {
+    public static <V> XDJsonHandle<V> createJsonHandler(Class<V> clazz, XDDataListener<V> listener) {
         return new XDJsonHandle<>(clazz, listener);
     }
 
@@ -83,8 +83,8 @@ public class XDJsonHandle<T> implements Callback {
         mainHandler.post(() -> {
             handleResponse(result);
             //handle the cookie
-            if (mListener instanceof MKCookieListener) {
-                ((MKCookieListener) mListener).onCookie(cookieLists);
+            if (mListener instanceof XDCookieListener) {
+                ((XDCookieListener) mListener).onCookie(cookieLists);
             }
         });
     }
