@@ -3,6 +3,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://git.aispeech.com.cn' }
+        maven { url 'https://git.aispeech.com.cn' }
     }
     dependencies {
 
@@ -18,6 +21,8 @@ allprojects {
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://git.aispeech.com.cn' }
     }
 }
 
