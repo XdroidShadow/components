@@ -14,21 +14,21 @@ import android.widget.ListView;
 
 import com.xd.spring.beans.XdDmfLoginBean;
 import com.xd.spring.ui.view.XDViewTouch;
-import com.xdroid.spring.httpRequest.XDHttpClient;
-import com.xdroid.spring.httpRequest.exception.XDHttpErrType;
-import com.xdroid.spring.httpRequest.listener.XDDownloadListener;
-import com.xdroid.spring.httpRequest.listener.MKDataListener;
-import com.xdroid.spring.httpRequest.request.XDRequest;
+//import com.xdroid.spring.httpRequest.XDHttpClient;
+//import com.xdroid.spring.httpRequest.exception.XDHttpErrType;
+//import com.xdroid.spring.httpRequest.listener.XDDownloadListener;
+//import com.xdroid.spring.httpRequest.listener.MKDataListener;
+//import com.xdroid.spring.httpRequest.request.XDRequest;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.xdroid.spring.httpRequest.listener.XDJsonHandle.createFileHandler;
-import static com.xdroid.spring.httpRequest.listener.XDJsonHandle.createJsonHandler;
-import static com.xdroid.spring.httpRequest.request.XDRequest.createGetRequest;
-import static com.xdroid.spring.httpRequest.request.XDRequest.createPostJSONRequest;
-import static com.xdroid.spring.httpRequest.request.XDRequest.createPostRequest;
+//import static com.xdroid.spring.httpRequest.listener.XDJsonHandle.createFileHandler;
+//import static com.xdroid.spring.httpRequest.listener.XDJsonHandle.createJsonHandler;
+//import static com.xdroid.spring.httpRequest.request.XDRequest.createGetRequest;
+//import static com.xdroid.spring.httpRequest.request.XDRequest.createPostJSONRequest;
+//import static com.xdroid.spring.httpRequest.request.XDRequest.createPostRequest;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
         requestPermissions(null, 1);
 
-        test2();
+//        test2();
 
 //        test();
 
@@ -116,55 +116,54 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    public void test2() {
-        String url = "http://39.105.38.116:8080/miyun/appManager/appLogin.do";//?userCode=dmf&passWord=dmf
-        Map<String, Object> params = new HashMap<String, Object>() {
-            {
-                put("userCode", "dmf");
-                put("passWord", 123);
-                put("passWord", 123);
-            }
-        };
-
-        XDHttpClient.post(createPostJSONRequest(url, params), createJsonHandler(XdDmfLoginBean.class, new MKDataListener<XdDmfLoginBean>() {
-            @Override
-            public void onSuccess(XdDmfLoginBean res) {
-                Log.e(TAG, "接口结果：" + res.toString());
-            }
-
-            @Override
-            public void onFailure(XDHttpErrType err) {
-                Log.e(TAG, "接口异常：" + err);
-            }
-        }));
-        String path = getExternalFilesDir(null).getPath() + "/test.xlsx";
-        Log.e(TAG, "path：" + path);
-
-
-        XDHttpClient.downloadFile(XDRequest.createGetRequest("http://218.4.57.5:8889/aispeech/firstAid/task/listExcel?_t=1665972227&status=-1&startTime=2022-10-18+00:00:00&endTime=2022-10-19+00:00:00", null),
-                createFileHandler(path, new XDDownloadListener() {
-                    @Override
-                    public void onProgress(int progress) {
-
-                        Log.e(TAG, "onProgress：" + progress);
-                    }
-
-                    @Override
-                    public void onSuccess(File res) {
-                        Log.e(TAG, "onSuccess：" + res.length());
-
-                    }
-
-                    @Override
-                    public void onFailure(XDHttpErrType err) {
-                        Log.e(TAG, "onFailure：" + err);
-
-                    }
-                }));
-
-
-    }
+//    public void test2() {
+//        String url = "http://39.105.38.116:8080/miyun/appManager/appLogin.do";//?userCode=dmf&passWord=dmf
+//        Map<String, Object> params = new HashMap<String, Object>() {
+//            {
+//                put("userCode", "dmf");
+//                put("passWord", 123);
+//                put("passWord", 123);
+//            }
+//        };
+//
+//        XDHttpClient.post(createPostJSONRequest(url, params), createJsonHandler(XdDmfLoginBean.class, new MKDataListener<XdDmfLoginBean>() {
+//            @Override
+//            public void onSuccess(XdDmfLoginBean res) {
+//                Log.e(TAG, "接口结果：" + res.toString());
+//            }
+//
+//            @Override
+//            public void onFailure(XDHttpErrType err) {
+//                Log.e(TAG, "接口异常：" + err);
+//            }
+//        }));
+//        String path = getExternalFilesDir(null).getPath() + "/test.xlsx";
+//        Log.e(TAG, "path：" + path);
+//
+//
+//        XDHttpClient.downloadFile(XDRequest.createGetRequest("http://218.4.57.5:8889/aispeech/firstAid/task/listExcel?_t=1665972227&status=-1&startTime=2022-10-18+00:00:00&endTime=2022-10-19+00:00:00", null),
+//                createFileHandler(path, new XDDownloadListener() {
+//                    @Override
+//                    public void onProgress(int progress) {
+//
+//                        Log.e(TAG, "onProgress：" + progress);
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(File res) {
+//                        Log.e(TAG, "onSuccess：" + res.length());
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(XDHttpErrType err) {
+//                        Log.e(TAG, "onFailure：" + err);
+//
+//                    }
+//                }));
+//
+//
+//    }
 
 
 }
