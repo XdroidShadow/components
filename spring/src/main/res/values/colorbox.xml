@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--    钉钉蓝色-->
+    <color name="blue_dd">#438AFE</color>
+    <color name="blue_2">#73B8FD</color>
+    <color name="blue_3">#5E7DBF</color>
+
     <color name="accent_material_light">#2196f3</color>
     <color name="page_dot_unselected">#c9c9c9</color>
     <color name="page_dot_selected">#00bbae</color>

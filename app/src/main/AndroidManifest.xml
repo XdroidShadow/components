@@ -36,16 +36,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.XDRecycleView" />
-
 <!--        -->
-        <activity android:name=".test.mytablayout.TabLayoutActivity">
+<!--        <activity android:name=".test.mytablayout.TabLayoutActivity">-->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
-        </activity>
+<!--        </activity>-->
 
         <service android:name=".test.XDService"/>
 

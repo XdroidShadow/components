@@ -22,6 +22,7 @@ public class IndexActivity extends AppCompatActivity {
 
 
         XDTests.test();
+
     }
 
 }
