@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.xdroid.spring.R;
-import com.xdroid.spring.util.android.ui.dialog.XdDialog;
 
 public class TestExampleActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -52,13 +51,6 @@ public class TestExampleActivity extends AppCompatActivity {
      * View的滑动
      */
     public void test() {
-
-        new XdDialog(this, "", "", new XdDialog.CallBack() {
-            @Override
-            public void onPositiveClick() {
-
-            }
-        });
 
     }
 

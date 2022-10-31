@@ -50,9 +50,5 @@ dependencies {
     //解析json
     implementation 'com.google.code.gson:gson:2.8.9'
 
-//https://git.aispeech.com.cn/jinxian.gong/xdroid/-/releases/v1.1.1
-//    implementation 'com.git.aispeech.com.cn.jinxian.gong:xdroid:v1.1.1'
-//    implementation 'https.git.aispeech.com.cn.jinxian.gong:xdroid:v1.1.1'
-//    implementation 'com.github.XdroidShadow:components:v1.1.0'
-    implementation 'com.github.XdroidShadow:components:1.1.9'
+    implementation 'com.github.XdroidShadow:components:1.1.10'
 }
