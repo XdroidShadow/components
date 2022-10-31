@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.TextView
 import com.xdroid.spring.R
 
-
+/**
+ *   通用对话框
+ */
 class XdDialog : Dialog {
     private var dialog: View? = null
     private var title: String?
