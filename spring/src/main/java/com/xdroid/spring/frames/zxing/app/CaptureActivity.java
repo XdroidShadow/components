@@ -74,7 +74,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.xdroid.spring.util.android.log.XDLog;
+import com.xdroid.spring.util.androids.tool.XDLog;
 
 import java.io.IOException;
 import java.util.HashSet;

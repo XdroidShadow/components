@@ -47,8 +47,9 @@ dependencies {
     //解析json
     implementation 'com.google.code.gson:gson:2.8.9'
 
-    implementation project(path: ':spring')
+//    implementation project(path: ':spring')
 
-//    implementation 'com.github.XdroidShadow:components:1.1.16'
+//    implementation 'com.github.XdroidShadow:components:1.1.17'
+
 }
 

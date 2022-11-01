@@ -1,10 +1,10 @@
 package com.xd.spring.test;
 //
-//import com.xdroid.spring.httpRequest.XDHttpClient;
-//import com.xdroid.spring.httpRequest.exception.XDHttpErrType;
-//import com.xdroid.spring.httpRequest.listener.XDDataListener;
-//import com.xdroid.spring.httpRequest.listener.XDJsonHandle;
-//import com.xdroid.spring.httpRequest.request.XDRequest;
+//import com.xdroid.spring.frames.httpRequest.XDHttpClient;
+//import com.xdroid.spring.frames.httpRequest.exception.XDHttpErrType;
+//import com.xdroid.spring.frames.httpRequest.listener.XDDataListener;
+//import com.xdroid.spring.frames.httpRequest.listener.XDJsonHandle;
+//import com.xdroid.spring.frames.httpRequest.request.XDRequest;
 
 //import com.xdroid.spring.util.android.image.XDImages;
 

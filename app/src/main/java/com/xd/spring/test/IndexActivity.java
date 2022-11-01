@@ -19,8 +19,8 @@ import com.aispeech.medicalcheck.xdroid.tool.crash.XDRuntimeLog;
 import com.xd.spring.R;
 import com.xdroid.spring.frames.zxing.app.CaptureActivity;
 import com.xdroid.spring.frames.zxing.util.ZxingCode;
-import com.xdroid.spring.util.android.log.XDLog;
-import com.xdroid.spring.util.android.ui.dialog.XDMask;
+import com.xdroid.spring.util.androids.log.XDLog;
+import com.xdroid.spring.util.androids.ui.dialog.XDMask;
 
 import static com.xdroid.spring.frames.zxing.util.ZxingCode.REQUEST_CODE_QR;
 //import com.xdroid.spring.util.android.ui.popwindow.XdPopupWindows;
@@ -42,10 +42,8 @@ public class IndexActivity extends AppCompatActivity {
         XDTests.test();
 
         //异常监听
-        XDRuntimeLog.createLogFiles(this);
         new XDCrashHandler(this).init();
-
-
+        
         new Handler().postDelayed(this::takeQRCode, 1000);
 
     }
