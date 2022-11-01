@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 import androidx.core.view.ViewCompat;
 
-public class XDStatusBar {
+public class XDStatusBars {
 
     /**
      * 修改状态栏颜色

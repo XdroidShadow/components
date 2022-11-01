@@ -18,7 +18,7 @@ import com.xdroid.spring.util.android.log.XDLog;
 /**
  * 获取安卓相关数据
  */
-public class XDAndroid {
+public class XDAndroids {
 
     private static final String TAG = "XDAndroid";
 

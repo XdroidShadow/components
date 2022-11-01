@@ -10,7 +10,7 @@ import com.xdroid.spring.R
 /**
  *   通用对话框
  */
-class XdDialog : Dialog {
+class XDDialog : Dialog {
     private var dialog: View? = null
     private var title: String?
     private var subTitle: String?

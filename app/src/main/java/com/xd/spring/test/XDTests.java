@@ -6,6 +6,8 @@ package com.xd.spring.test;
 //import com.xdroid.spring.httpRequest.listener.XDJsonHandle;
 //import com.xdroid.spring.httpRequest.request.XDRequest;
 
+//import com.xdroid.spring.util.android.image.XDImages;
+
 import java.util.HashMap;
 
 public class XDTests {
@@ -29,6 +31,8 @@ public class XDTests {
 //            }
 //        }));
 
+
+//        new XDImages();
 
 
     }

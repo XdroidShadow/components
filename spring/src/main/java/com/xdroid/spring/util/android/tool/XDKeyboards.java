@@ -5,7 +5,7 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-public class XDKeyboard {
+public class XDKeyboards {
 
     /**
      * 开启软键盘

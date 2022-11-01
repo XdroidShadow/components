@@ -9,7 +9,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.xdroid.spring.R
-import com.xdroid.spring.util.android.tool.XDAndroid
+import com.xdroid.spring.util.android.tool.XDAndroids
 
 /**
  *   图片加载工具
@@ -108,7 +108,7 @@ class XDImages {
         ): Bitmap? {
             val paint = Paint(Paint.ANTI_ALIAS_FLAG)
             paint.color = color
-            paint.textSize = XDAndroid.dpToPx(context, size).toFloat()
+            paint.textSize = XDAndroids.dpToPx(context, size).toFloat()
             var bitmapConfig = bitmap.config
             paint.isDither = true // 获取跟清晰的图像采样
             paint.isFilterBitmap = true // 过滤一些
@@ -118,8 +118,8 @@ class XDImages {
             val canvas = Canvas(bitmap)
             canvas.drawText(
                 info,
-                XDAndroid.dpToPx(context, paddingLeft).toFloat(),
-                XDAndroid.dpToPx(context, paddingTop).toFloat(),
+                XDAndroids.dpToPx(context, paddingLeft).toFloat(),
+                XDAndroids.dpToPx(context, paddingTop).toFloat(),
                 paint
             )
             return bitmap

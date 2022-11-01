@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="mkpark_navi_pop">
+        <item name="android:windowEnterAnimation">@anim/tsh_pop_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/tsh_pop_bottom_out</item>
+    </style>
+
+
+
+
+</resources>
