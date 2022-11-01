@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
@@ -28,10 +29,7 @@ public class IndexActivity extends AppCompatActivity {
         XDTests.test();
 
 
-//        findViewById(R.id.btn1).setOnClickListener((v) -> {
-//            testMask();
-//
-//        });
+        new Handler().postDelayed(this::testMask,100);
 
     }
 
