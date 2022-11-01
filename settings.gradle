@@ -1,4 +1,3 @@
 rootProject.name = "xdspring"
 include ':app'
 include ':spring'
-include ':frames'

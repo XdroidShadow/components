@@ -49,6 +49,6 @@ dependencies {
 
 //    implementation project(path: ':spring')
 
-//    implementation 'com.github.XdroidShadow:components:1.1.14'
+    implementation 'com.github.XdroidShadow:components:1.1.15'
 }
 
