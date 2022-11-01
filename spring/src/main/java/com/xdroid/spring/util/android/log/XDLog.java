@@ -63,8 +63,8 @@ public class XDLog {
     public static <T> void i(String tag, T... args) {
         if (logLevel >= INFO) {
             StringBuilder sb = new StringBuilder();
-            sb.append("/");
             sb.append(tag);
+            sb.append("/");
             for (T info : args) {
                 sb.append(info);
             }
