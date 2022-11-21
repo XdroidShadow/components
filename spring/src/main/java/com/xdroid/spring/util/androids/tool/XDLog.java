@@ -31,15 +31,17 @@ public class XDLog {
     //日志输出到什么级别，再网上的级别就不输出了
     @XdLogType
     private static int logLevel = ERROR;
+    private static final String SEPARATOR = " ";
 
 
     public static <T> void d(String tag, T... args) {
         if (logLevel >= DEBUG) {
             StringBuilder sb = new StringBuilder();
-            sb.append("/");
             sb.append(tag);
+            sb.append("/");
             for (T info : args) {
                 sb.append(info);
+                sb.append(SEPARATOR);
             }
             sb.append("\n");
             Log.d(TAG, sb.toString());
@@ -49,10 +51,11 @@ public class XDLog {
     public static <T> void e(String tag, T... args) {
         if (logLevel >= ERROR) {
             StringBuilder sb = new StringBuilder();
-            sb.append("/");
             sb.append(tag);
+            sb.append("/");
             for (T info : args) {
                 sb.append(info);
+                sb.append(SEPARATOR);
             }
             sb.append("\n");
             Log.e(TAG, sb.toString());
@@ -67,6 +70,7 @@ public class XDLog {
             sb.append("/");
             for (T info : args) {
                 sb.append(info);
+                sb.append(SEPARATOR);
             }
             sb.append("\n");
             Log.i(TAG, sb.toString());

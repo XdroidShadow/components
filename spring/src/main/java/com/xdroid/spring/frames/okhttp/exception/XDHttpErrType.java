@@ -11,6 +11,15 @@ public enum XDHttpErrType {
     String errInfo;
     int errCode;
 
+
+    public String getErrInfo() {
+        return errInfo;
+    }
+
+    public int getErrCode() {
+        return errCode;
+    }
+
     XDHttpErrType(String errInfo, int errCode) {
         this.errInfo = errInfo;
         this.errCode = errCode;

@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 /**
  * popupWindow 工具
  */
-public class XdPopupWindows {
+public class XDPopupWindows {
 
     /**
      * 新建 popupWindow

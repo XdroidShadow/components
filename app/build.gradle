@@ -47,9 +47,14 @@ dependencies {
     //解析json
     implementation 'com.google.code.gson:gson:2.8.9'
 
-//    implementation project(path: ':spring')
+    implementation project(path: ':spring')
 
-//    implementation 'com.github.XdroidShadow:components:1.1.17'
+//    implementation 'com.github.XdroidShadow:components:1.1.21'
+    //
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+    //
+    implementation("org.greenrobot:eventbus:3.3.1")
 
 }
 

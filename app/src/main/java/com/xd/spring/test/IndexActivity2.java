@@ -1,9 +1,5 @@
 package com.xd.spring.test;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -11,26 +7,37 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.xd.spring.R;
 import com.xd.spring.test.rxjava.XDTestRxJava;
 import com.xd.spring.test.rxjava.events.XDEvent1;
+import com.xd.spring.test.rxjava.events.XDEvent2;
 import com.xdroid.spring.frames.zxing.app.CaptureActivity;
 import com.xdroid.spring.frames.zxing.util.ZxingCode;
 import com.xdroid.spring.util.androids.tool.XDLog;
 import com.xdroid.spring.util.androids.ui.dialog.XDMask;
+//import com.xdroid.spring.util.androids.ui.popwindow.XDPopupWindows;
 import com.xdroid.spring.util.androids.ui.popwindow.XDPopupWindows;
-import com.xdroid.spring.util.javas.tool.XDFiles;
-
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.functions.Consumer;
 
 import static com.xdroid.spring.frames.zxing.util.ZxingCode.REQUEST_CODE_QR;
 
-public class IndexActivity extends AppCompatActivity {
-    private static final String TAG = "IndexActivity";
+public class IndexActivity2 extends IndexActivity {
+
+
+    private static final String TAG = "IndexActivity2";
 
     private LinearLayout container;
-    private static boolean isStarted = false;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -39,37 +46,28 @@ public class IndexActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         container = findViewById(R.id.container);
 
-//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
 
-//        XDTests.test();
+//        EventBus.getDefault().register(IndexActivity2.this);
+        //RxJava 测试
 
-        XDTestRxJava.test();
+        Observable.range(1,10)
+                .delay(3000, TimeUnit.MILLISECONDS)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Throwable {
 
-        //异常监听
-//        new XDCrashHandler(this).init();
-//        new Handler().postDelayed(this::takeQRCode, 1000);
-//        new Handler().postDelayed(this::testPopWindow, 1000);
-
-
-//        if (!isStarted) {
-//            isStarted = true;
-//            if (!EventBus.getDefault().isRegistered(this)) {
-//                EventBus.getDefault().register(this);
-//                startActivity(new Intent(this, IndexActivity2.class));
-//            }
-//        }
-
+                        XDTestRxJava.testEventBus(" - "+integer);
+                    }
+                });
 
     }
 
 
     @Subscribe()
-    public void testEventBus(XDEvent1 e) {
+    public void testEventBus2(XDEvent2 e) {
         XDLog.e(TAG, "  收到消息", e.getInfo());
 
     }
-
-
 
 
     private void testPopWindow() {
@@ -82,7 +80,7 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     public void takeQRCode() {
-        Intent intent = new Intent(IndexActivity.this, CaptureActivity.class);
+        Intent intent = new Intent(IndexActivity2.this, CaptureActivity.class);
         startActivityForResult(intent, REQUEST_CODE_QR);
     }
 
