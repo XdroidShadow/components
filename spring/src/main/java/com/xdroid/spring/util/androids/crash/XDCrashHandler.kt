@@ -9,6 +9,7 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.io.Writer
 import java.lang.Thread.UncaughtExceptionHandler
+import java.net.UnknownHostException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -102,6 +103,27 @@ data class XDCrashHandler(var mContext: Context) : UncaughtExceptionHandler {
         }
 
     }
+
+
+    // 读取堆栈
+    private fun getStackTraceString(tr: Throwable?): String {
+        if (tr == null) {
+            return ""
+        }
+        var t = tr
+        while (t != null) {
+            if (t is UnknownHostException) {
+                return "UnknownHostException"
+            }
+            t = t.cause
+        }
+        val sw = StringWriter()
+        val pw = PrintWriter(sw)
+        tr.printStackTrace(pw)
+        pw.flush()
+        return sw.toString()
+    }
+
 
 
 }

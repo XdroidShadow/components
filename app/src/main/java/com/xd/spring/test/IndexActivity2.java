@@ -4,14 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.view.Window;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 
 import com.xd.spring.R;
+import com.xd.spring.databinding.ActivityTest2Binding;
 import com.xd.spring.test.rxjava.XDTestRxJava;
 import com.xd.spring.test.rxjava.events.XDEvent1;
 import com.xd.spring.test.rxjava.events.XDEvent2;
@@ -21,6 +26,7 @@ import com.xdroid.spring.util.androids.tool.XDLog;
 import com.xdroid.spring.util.androids.ui.dialog.XDMask;
 //import com.xdroid.spring.util.androids.ui.popwindow.XDPopupWindows;
 import com.xdroid.spring.util.androids.ui.popwindow.XDPopupWindows;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -32,69 +38,28 @@ import io.reactivex.rxjava3.functions.Consumer;
 
 import static com.xdroid.spring.frames.zxing.util.ZxingCode.REQUEST_CODE_QR;
 
-public class IndexActivity2 extends IndexActivity {
+public class IndexActivity2 extends AppCompatActivity {
 
 
     private static final String TAG = "IndexActivity2";
+    ActivityTest2Binding binding;
 
-    private LinearLayout container;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        container = findViewById(R.id.container);
+        //使用淡入淡出效果
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        getWindow().setExitTransition(new Fade());
+        getWindow().setExitTransition(new Fade());
+        binding = ActivityTest2Binding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-
-//        EventBus.getDefault().register(IndexActivity2.this);
-        //RxJava 测试
-
-        Observable.range(1,10)
-                .delay(3000, TimeUnit.MILLISECONDS)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Throwable {
-
-                        XDTestRxJava.testEventBus(" - "+integer);
-                    }
-                });
-
+        ViewCompat.setTransitionName(binding.page2Img, "shareIMG");
+        ViewCompat.setTransitionName(binding.page2Img2, "shareIMG2");
     }
 
 
-    @Subscribe()
-    public void testEventBus2(XDEvent2 e) {
-        XDLog.e(TAG, "  收到消息", e.getInfo());
-
-    }
-
-
-    private void testPopWindow() {
-        PopupWindow popupWindow = XDPopupWindows.createPopupWindow(this);
-        XDPopupWindows.popAction(container, XDPopupWindows.BOTTOM, popupWindow);
-    }
-
-    private void testMask() {
-        new XDMask(this).show();
-    }
-
-    public void takeQRCode() {
-        Intent intent = new Intent(IndexActivity2.this, CaptureActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_QR);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case REQUEST_CODE_QR:
-                if (resultCode == Activity.RESULT_OK)
-                    XDLog.e(TAG, data.getStringExtra(ZxingCode.SCAN_RESULT));
-                break;
-        }
-
-    }
 }

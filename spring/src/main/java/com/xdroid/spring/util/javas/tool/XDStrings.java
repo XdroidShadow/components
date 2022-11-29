@@ -13,10 +13,11 @@ import java.util.regex.Pattern;
  */
 public class XDStrings {
     private static String regex = "[\\u4e00-\\u9fa5]";
-    private static Pattern pattern =  Pattern.compile(regex);
+    private static Pattern pattern = Pattern.compile(regex);
 
     /**
-     *   中文提取拼音
+     * 中文提取拼音
+     *
      * @param chineseStr
      * @return
      */
@@ -47,5 +48,18 @@ public class XDStrings {
         return pattern.matcher(str).find();
     }
 
+    /**
+     * 避免使用 “+”
+     * SafeVarargs 因为擦除，数组的运行时类型就只能是Object[]
+     * 不影响安全，忽略
+     */
+    @SafeVarargs
+    public static <T> String unitMultiArgs(T... args) {
+        StringBuilder sb = new StringBuilder();
+        for (T s : args) {
+            sb.append(s);
+        }
+        return sb.toString();
+    }
 
 }

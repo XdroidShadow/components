@@ -8,7 +8,11 @@ package com.xd.spring.test;
 
 //import com.xdroid.spring.util.android.image.XDImages;
 
+import android.content.Context;
+import android.net.Uri;
+
 import java.util.HashMap;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class XDTests {
     public static void test() {
@@ -33,6 +37,9 @@ public class XDTests {
 
 
 //        new XDImages();
+
+        Uri uri = Uri.fromFile(null);
+
 
 
     }

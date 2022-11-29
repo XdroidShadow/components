@@ -1,6 +1,7 @@
 package com.xd.spring.test.rxjava;
 
 
+import com.xd.spring.test.XDApplication;
 import com.xd.spring.test.rxjava.events.XDEvent1;
 import com.xd.spring.test.rxjava.events.XDEvent2;
 import com.xdroid.spring.frames.okhttp.XDHttpClient;
@@ -9,7 +10,7 @@ import com.xdroid.spring.frames.okhttp.listener.XDDataListener;
 import com.xdroid.spring.util.androids.tool.XDLog;
 import com.xdroid.spring.util.javas.tool.XDFiles;
 import com.xdroid.spring.util.javas.tool.download.XDDownloadBean;
-import com.xdroid.spring.util.javas.tool.download.XDDownloadCallBack;
+import com.xdroid.spring.util.javas.tool.download.XDSingleCallBack;
 import com.xdroid.spring.util.javas.tool.download.XDDownloadChannel;
 import com.xdroid.spring.util.javas.tool.download.XDDownloads;
 
@@ -27,10 +28,16 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.CompletableEmitter;
+import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.core.CompletableOnSubscribe;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.core.ObservableOnSubscribe;
@@ -76,6 +83,34 @@ public class XDTestRxJava {
 
         testDownloadByOkhttp();
 
+    }
+
+    public void testOkhttpErr() {
+
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<Integer> emitter) throws Throwable {
+                emitter.onNext(1);
+                emitter.onNext(2);
+                emitter.onNext(3);
+                emitter.onComplete();
+
+            }
+        })
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends Integer>>() {
+                    @Override
+                    public ObservableSource<? extends Integer> apply(Throwable throwable) throws Throwable {
+                        return null;
+                    }
+                })
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Throwable {
+
+
+                    }
+                })
+        ;
     }
 
     public static void testOKHttpWS() {
@@ -142,14 +177,10 @@ public class XDTestRxJava {
     /**
      * 使用OKhttp进行断点续传
      */
-    static int percent = 0;
-
     public static void testDownloadByOkhttp() {
-
-        XDDownloads.getInstance().download(
-                new XDDownloadBean(webApkPath, apkPath, XDDownloadChannel.HttpURLConnection,
-                        true,0),
-                new XDDownloadCallBack() {
+        XDDownloads.getInstance().downloadSingleThread(
+                new XDDownloadBean(webApkPath, apkPath, XDDownloadChannel.HttpURLConnection),
+                new XDSingleCallBack() {
 
                     @Override
                     public void onFail(String info) {
@@ -159,7 +190,6 @@ public class XDTestRxJava {
 
                     @Override
                     public void onDownloading(long pos, long contentLength) {
-                        int current = (int) (pos * 100 / contentLength);
 
                     }
 
@@ -169,39 +199,11 @@ public class XDTestRxJava {
                     }
 
                 });
-
-//        new Thread(() -> {
-//            try {
-//                OkHttpClient okHttpClient = XDHttpClient.getOkHttpClient();
-//                Request request = new Request.Builder()
-//                        .url(webApkPath)
-//                        .addHeader("range", pos + "-" + "154284998")
-//                        .build();
-//                Call call = okHttpClient.newCall(request);
-//                Response response = call.execute();
-//                int code = response.code();
-//                XDLog.e(TAG, "web响应码：", code);
-//                InputStream appData = response.body().byteStream();
-//
-//                RandomAccessFile rw = new RandomAccessFile(apkPath, "rw");
-//                rw.seek(pos);
-//
-//                byte[] temp = new byte[1024 * 5];
-//                int dataLen = 0;
-//                while ((dataLen = appData.read(temp)) > 0) {
-//                    pos += dataLen;
-//                    rw.write(temp, 0, dataLen);
-//                    XDLog.e(TAG, "dataLen = ", pos);
-//                }
-//                appData.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
     }
 
     //   //storage/emulated/0/test/app.apk
     public static String apkPath = XDFiles.buildFile("test", "app.apk");
+    //    public static String apkPath = XDFiles.buildFile(XDApplication.INSTANCE(),"test", "app.apk");
     public static String webApkPath = "http://218.4.57.5:8889/aispeech/firstAid/apk/download?type=car";
     //    public static long pos = 6230205;
     public static long pos = 47458602;

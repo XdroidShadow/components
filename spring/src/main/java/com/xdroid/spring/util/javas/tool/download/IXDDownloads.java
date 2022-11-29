@@ -2,5 +2,8 @@ package com.xdroid.spring.util.javas.tool.download;
 
 public interface IXDDownloads {
 
-    void download(XDDownloadBean target,XDDownloadCallBack callBack);
+    void downloadSingleThread(XDDownloadBean target, XDSingleCallBack callBack);
+
+
+//    void downloadMultiThread(XDDownloadBean target, XDSingleCallBack callBack);
 }

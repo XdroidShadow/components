@@ -11,6 +11,7 @@ import java.util.Objects;
  */
 public class XDTimes {
     public static final DateFormat fullDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final DateFormat fullDateFormat_noSp = new SimpleDateFormat("yyyyMMddHHmmss");
 
     /**
      * 计算时间间隔
@@ -38,6 +39,15 @@ public class XDTimes {
      */
     public static String currentTimeString() {
         return fullDateFormat.format(Calendar.getInstance().getTime());
+    }
+
+
+    /**
+     *   当前时间字符串
+     *   没有分隔符
+     */
+    public static String currentTimeStringNoSp() {
+        return fullDateFormat_noSp.format(Calendar.getInstance().getTime());
     }
 
 

@@ -17,10 +17,10 @@ import okhttp3.Response;
  * 使用 OKhttp 下载
  */
 public class XDDownloadByOkhttp extends XDDownloadTask implements Runnable {
-    private static final String TAG = "XDDownloadTaskOkhttp";
+    private static final String TAG = "XDDownloadByOkhttp";
 
 
-    public XDDownloadByOkhttp(XDDownloadBean target, XDDownloadCallBack callBack) {
+    public XDDownloadByOkhttp(XDDownloadBean target, XDSingleCallBack callBack) {
         super(target, callBack);
     }
 
@@ -30,39 +30,38 @@ public class XDDownloadByOkhttp extends XDDownloadTask implements Runnable {
             try {
                 XDLog.e(TAG, "是否支持断点续传：", isSupport);
                 //断点位置
-                long pos = 0;
-                if (isSupport) pos = target.getBreakpoint();
-                XDLog.e(TAG, "断点：pos = ", pos);
+                long position = 0;
+                if (isSupport) position = Integer.parseInt(target.getBreakpoint());
+                XDLog.e(TAG, "断点：position = ", position);
                 callBack.onStart("run");
-                OkHttpClient okHttpClient = XDHttpClient.getOkHttpClient();
-                String rangeHeader = cLength == -1? ("bytes=" + pos + "-") :("bytes=" + pos + "-" + cLength);
+
                 Request request = new Request.Builder()
                         .url(target.getUrlPath())
-                        .addHeader("Range",rangeHeader)
+                        .addHeader("Range", "bytes=" + target.getBreakpoint() + "-" + target.getEndPoint())
                         .build();
-                Call call = okHttpClient.newCall(request);
+                Call call = XDHttpClient.getOkHttpClient().newCall(request);
                 Response response = call.execute();
                 //文件总长度
                 long contentLength = response.body().contentLength();
-                int code = response.code();
-                XDLog.e(TAG, "web响应码：", code);
+                XDLog.e(TAG, "web响应码：", response.code());
+
                 InputStream appData = response.body().byteStream();
-                RandomAccessFile rw = new RandomAccessFile(target.getDestinationPath(), "rw");
-                rw.seek(pos);
+                RandomAccessFile rw = new RandomAccessFile(target.getDestinationPath(), "rwd");
+                rw.seek(position);
                 byte[] temp = new byte[1024 * 5];
                 int dataLen = 0;
                 while ((dataLen = appData.read(temp)) > 0) {
-                    pos += dataLen;
+                    position += dataLen;
                     rw.write(temp, 0, dataLen);
-                    callBack.onDownloading(pos, contentLength);
-                    int current = (int) (pos * 100 / contentLength);
+                    callBack.onDownloading(position, contentLength);
+                    int current = (int) (position * 100 / contentLength);
                     if (percent != current) {
                         percent = current;
-                        XDLog.e(TAG, "onDownloading", pos, "/", contentLength, current, "%");
+                        XDLog.e(TAG, "onDownloading", position, "/", contentLength, current, "%");
                     }
                 }
                 appData.close();
-                callBack.onSuccess("", pos, contentLength);
+                callBack.onSuccess("", position, contentLength);
             } catch (IOException e) {
                 e.printStackTrace();
                 callBack.onFail("IOException");

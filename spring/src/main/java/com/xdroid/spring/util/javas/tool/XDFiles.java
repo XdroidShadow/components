@@ -74,15 +74,48 @@ public class XDFiles {
         }
     }
 
+    public static String getSdCardPath(String... paths) {
+        return getSdCardPath(null, paths);
+    }
+
+    public static String getSdCardPath(Context c, String... paths) {
+        StringBuilder sb = new StringBuilder();
+        if (c == null) {
+            //  /storage/emulated/0
+            sb.append(Environment.getExternalStorageDirectory().getPath());
+        } else {
+            //  /data/user/0/com.xd.spring/files
+            sb.append(c.getFilesDir());
+        }
+        if (paths.length > 1) {
+            for (int i = 0; i < paths.length - 1; i++) {
+                sb.append(File.separator);
+                sb.append(paths[i]);
+            }
+        }
+        sb.append(File.separator);
+        sb.append(paths[paths.length - 1]);
+        return sb.toString();
+    }
+
+    public static String buildFile(String... paths) {
+        return buildFile(null, paths);
+    }
 
     /**
      * 获取app文件路径
      */
-    public static String buildFile(String... paths) {
+    public static String buildFile(Context c, String... paths) {
         if (paths.length == 0) throw new RuntimeException("目标路径不能为空！");
 
         StringBuilder sb = new StringBuilder();
-        sb.append(Environment.getExternalStorageDirectory().getPath());
+        if (c == null) {
+            //  /storage/emulated/0
+            sb.append(Environment.getExternalStorageDirectory().getPath());
+        } else {
+            //  /data/user/0/com.xd.spring/files
+            sb.append(c.getFilesDir());
+        }
         if (paths.length > 1) {
             for (int i = 0; i < paths.length - 1; i++) {
                 sb.append(File.separator);
@@ -107,6 +140,36 @@ public class XDFiles {
         }
         XDLog.e("文件路径：", destination, " 创建结果：", createRes);
         return destination;
+    }
+
+    public static String buildDirs( String... paths){
+        return buildDirs(null,paths);
+    }
+    public static String buildDirs(Context c, String... paths){
+        if (paths.length == 0) throw new RuntimeException("目标路径不能为空！");
+
+        StringBuilder sb = new StringBuilder();
+        if (c == null) {
+            //  /storage/emulated/0
+            sb.append(Environment.getExternalStorageDirectory().getPath());
+        } else {
+            //  /data/user/0/com.xd.spring/files
+            sb.append(c.getFilesDir());
+        }
+        if (paths.length > 1) {
+            for (int i = 0; i < paths.length - 1; i++) {
+                sb.append(File.separator);
+                sb.append(paths[i]);
+            }
+        }
+        sb.append(File.separator);
+        sb.append(paths[paths.length - 1]);
+
+        File dir = new File(sb.toString());
+        boolean createRes =   dir.mkdirs();
+
+        XDLog.e("文件夹路径：", sb.toString(), " 创建结果：", createRes);
+        return sb.toString();
     }
 
 

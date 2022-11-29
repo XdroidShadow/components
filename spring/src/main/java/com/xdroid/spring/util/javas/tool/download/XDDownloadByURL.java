@@ -12,9 +12,9 @@ import java.net.URL;
  * 使用 HttpURLConnection 下载
  */
 public class XDDownloadByURL extends XDDownloadTask implements Runnable {
-    private static final String TAG = "XDDownloadTaskURL";
+    private static final String TAG = "XDDownloadByURL";
 
-    public XDDownloadByURL(XDDownloadBean target, XDDownloadCallBack callBack) {
+    public XDDownloadByURL(XDDownloadBean target, XDSingleCallBack callBack) {
         super(target, callBack);
     }
 
@@ -27,34 +27,35 @@ public class XDDownloadByURL extends XDDownloadTask implements Runnable {
                         try {
                             XDLog.e(TAG, "是否支持断点续传：", isSupport);
                             //断点位置
-                            long pos = 0;
-                            if (isSupport) pos = target.getBreakpoint();
-                            XDLog.e(TAG, "断点：pos = ", pos);
+                            long position = 0;
+                            if (isSupport) position = Integer.parseInt(target.getBreakpoint());
+                            XDLog.e(TAG, "断点：position = ", position);
                             callBack.onStart("run");
                             URL url = new URL(target.getUrlPath());
                             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                             long contentLength = urlConnection.getContentLength();
+                            XDLog.e(TAG, "web响应码：", urlConnection.getResponseCode());
                             //断点续传配置
                             if (isSupport) {
-                                urlConnection.setRequestProperty("Range", "bytes=" + pos + "-" + contentLength);
+                                urlConnection.setRequestProperty("Range", "bytes=" + position + "-" + contentLength);
                             }
                             InputStream appData = urlConnection.getInputStream();
-                            RandomAccessFile rw = new RandomAccessFile(target.getDestinationPath(), "rw");
-                            rw.seek(pos);
+                            RandomAccessFile rw = new RandomAccessFile(target.getDestinationPath(), "rwd");
+                            rw.seek(position);
                             byte[] temp = new byte[1024 * 5];
                             int dataLen = 0;
                             while ((dataLen = appData.read(temp)) > 0) {
-                                pos += dataLen;
+                                position += dataLen;
                                 rw.write(temp, 0, dataLen);
-                                callBack.onDownloading(pos, contentLength);
-                                int current = (int) (pos * 100 / contentLength);
+                                callBack.onDownloading(position, contentLength);
+                                int current = (int) (position * 100 / contentLength);
                                 if (percent != current) {
                                     percent = current;
-                                    XDLog.e(TAG, "onDownloading", pos, " - ", contentLength, current, "%");
+                                    XDLog.e(TAG, "onDownloading", position, " - ", contentLength, current, "%");
                                 }
                             }
                             appData.close();
-                            callBack.onSuccess("", pos, contentLength);
+                            callBack.onSuccess("", position, contentLength);
                         } catch (Exception e) {
                             e.printStackTrace();
                             callBack.onFail("Exception");

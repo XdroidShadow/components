@@ -1,5 +1,9 @@
 package com.xdroid.spring.util.javas.tool.download;
 
+import com.xdroid.spring.util.javas.tool.XDFiles;
+
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -28,8 +32,12 @@ public class XDDownloads implements IXDDownloads {
         return INSTANCE;
     }
 
+    /**
+     * 单线程下载
+     * one thread download
+     */
     @Override
-    public void download(XDDownloadBean target, XDDownloadCallBack callBack) {
+    public void downloadSingleThread(XDDownloadBean target, XDSingleCallBack callBack) {
         switch (target.getChannel()) {
             case OKHTTP:
                 executorService.execute(new XDDownloadByOkhttp(target, callBack));
@@ -37,6 +45,54 @@ public class XDDownloads implements IXDDownloads {
             case HttpURLConnection:
                 executorService.execute(new XDDownloadByURL(target, callBack));
                 break;
+        }
+    }
+
+
+    /**
+     * 多线程下载
+     * Multi-threaded download
+     * 使用多个单线程下载来完成
+     * 等待开发
+     */
+    private void downloadMultiThread(XDDownloadBean target, XDSingleCallBack callBack) {
+        //重点
+        try {
+            RandomAccessFile rf = new RandomAccessFile("", "rwd");
+            rf.setLength(100);//1、设置文件长度
+            rf.seek(1);//2、指定位置的写入
+
+
+            XDFiles.isSupportBreakpointDownload(target.getUrlPath(), (isSupport, cLength) -> {
+                switch (target.getChannel()) {
+                    case OKHTTP:
+                        for (int i = 0; i < target.getThreadCount(); i++) {
+                            executorService.execute(new XDDownloadByOkhttp(target, new XDSingleCallBack() {
+                                @Override
+                                public void onFail(String info) {
+
+                                }
+
+                                @Override
+                                public void onSuccess(String info, long pos, long contentLength) {
+
+                                }
+
+                                @Override
+                                public void onDownloading(long pos, long contentLength) {
+
+                                }
+                            }));
+                        }
+                        break;
+                    case HttpURLConnection:
+                        executorService.execute(new XDDownloadByURL(target, callBack));
+                        break;
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

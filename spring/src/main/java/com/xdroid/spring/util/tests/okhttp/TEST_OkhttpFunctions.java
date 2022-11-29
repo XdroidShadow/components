@@ -1,10 +1,15 @@
 package com.xdroid.spring.util.tests.okhttp;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -240,5 +245,13 @@ public class TEST_OkhttpFunctions {
         });
     }
 
+    /**
+     *   Gson解析
+     */
+    private void testGson(){
+
+        Type type = new TypeToken<ArrayList<String>>() { }.getType();
+        new Gson().fromJson("",type);
+    }
 
 }

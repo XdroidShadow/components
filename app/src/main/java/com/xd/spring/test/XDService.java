@@ -12,6 +12,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.xdroid.annotation.XDTip;
+
 public class XDService extends Service {
     private static final String TAG = "XDService";
 
@@ -30,6 +32,7 @@ public class XDService extends Service {
         setForeground();
     }
 
+    @XDTip("setForeground")
     @RequiresApi(Build.VERSION_CODES.O)
     private void setForeground() {
 //        Notification notification = XDNotification.productNotification(this);

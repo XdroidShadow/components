@@ -5,11 +5,11 @@ package com.xdroid.spring.util.javas.tool.download;
  */
 public class XDDownloadTask {
     public XDDownloadBean target;
-    public XDDownloadCallBack callBack;
+    public XDSingleCallBack callBack;
     public int percent = 0;
 
 
-    public XDDownloadTask(XDDownloadBean target,XDDownloadCallBack callBack) {
+    public XDDownloadTask(XDDownloadBean target, XDSingleCallBack callBack) {
         this.target = target;
         this.callBack = callBack;
     }
