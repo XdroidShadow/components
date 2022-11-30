@@ -82,7 +82,7 @@ public class XDHttpClient {
         mOkHttpClient = okHttpClientBuilder.build();
     }
 
-    public static OkHttpClient getOkHttpClient() {
+    public static OkHttpClient getInstance() {
         return mOkHttpClient;
     }
 

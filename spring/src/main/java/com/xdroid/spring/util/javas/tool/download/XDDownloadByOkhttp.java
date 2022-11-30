@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 
 import okhttp3.Call;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -39,7 +38,7 @@ public class XDDownloadByOkhttp extends XDDownloadTask implements Runnable {
                         .url(target.getUrlPath())
                         .addHeader("Range", "bytes=" + target.getBreakpoint() + "-" + target.getEndPoint())
                         .build();
-                Call call = XDHttpClient.getOkHttpClient().newCall(request);
+                Call call = XDHttpClient.getInstance().newCall(request);
                 Response response = call.execute();
                 //文件总长度
                 long contentLength = response.body().contentLength();

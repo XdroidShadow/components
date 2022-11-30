@@ -23,6 +23,8 @@ import android.view.Window;
 import android.widget.PopupWindow;
 
 
+import com.google.common.base.Supplier;
+import com.xd.spring.R;
 import com.xd.spring.databinding.ActivityMainBinding;
 import com.xd.spring.test.rxjava.events.XDEvent1;
 import com.xdroid.annotation.XDImportant;
@@ -31,6 +33,7 @@ import com.xdroid.annotation.XDTip;
 import com.xdroid.spring.frames.zxing.app.CaptureActivity;
 import com.xdroid.spring.frames.zxing.util.ZxingCode;
 import com.xdroid.spring.util.androids.tool.XDLog;
+import com.xdroid.spring.util.androids.ui.dialog.XDDialog;
 import com.xdroid.spring.util.androids.ui.dialog.XDMask;
 import com.xdroid.spring.util.androids.ui.popwindow.XDPopupWindows;
 import com.xdroid.spring.util.javas.tool.zip.test.XDZipsTest;
@@ -38,7 +41,16 @@ import com.xdroid.spring.util.javas.tool.zip.test.XDZipsTest;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Executors;
 
 import static com.xdroid.spring.frames.zxing.util.ZxingCode.REQUEST_CODE_QR;
 
@@ -60,6 +72,7 @@ public class IndexActivity extends AppCompatActivity {
         //view binding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
 //        binding.btn1.setOnClickListener(this::testTransition);
         binding.btn1.setOnClickListener(this::testService);
@@ -87,6 +100,16 @@ public class IndexActivity extends AppCompatActivity {
 //        XDTestGeneric.testZip();
 //        XDZipsTest.testZip();
         XDZipsTest.testUnZip_dir();
+
+        ArrayList<String> data = new ArrayList<>();
+        Supplier<Boolean> booleanSupplier = data::isEmpty;
+
+        XDDialog xdDialog = new XDDialog(this, "", "", new XDDialog.CallBack() {
+            @Override
+            public void onPositiveClick() {
+
+            }
+        });
 
     }
 
@@ -129,6 +152,8 @@ public class IndexActivity extends AppCompatActivity {
 //        Intent intent1  = new Intent(this, XDAidlService.class);
 
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
+
+
     }
 
 

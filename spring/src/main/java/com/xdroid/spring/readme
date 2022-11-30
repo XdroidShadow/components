@@ -1,0 +1,9 @@
+
+注意：
+【压缩工具】压缩中文有BUG
+
+等待开发：
+【正则表达式】XDRegularExpressions
+【Properties】添加Properties工具
+【硬件性能详细信息】特别需要获取CPU核心数量，用于ThreadPool初始化控制（确保可运行线程的平均数量不明显多于处理器的数量。）
+【将电子工牌中的工具移植过来】远程调试执行adb
