@@ -36,7 +36,7 @@ public class XDStatusBars {
     /**
      * 透明状态栏
      */
-    public void translucentStatusBar(Activity activity, boolean hideStatusBarBackground) {
+    public static void translucentStatusBar(Activity activity, boolean hideStatusBarBackground) {
         Window window = activity.getWindow();
         //添加Flag把状态栏设为可绘制模式
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -68,7 +68,7 @@ public class XDStatusBars {
      *
      * @param activity
      */
-    public void setStatusBarTextColor(Activity activity) {
+    public static void setStatusBarTextColor(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //如果是6.0以上将状态栏文字改为黑色，并设置状态栏颜色
             activity.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -96,7 +96,7 @@ public class XDStatusBars {
     /**
      * 设置状态栏字体颜色
      */
-    public void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
+    public static void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
         View decor = activity.getWindow().getDecorView();
         if (dark) {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);

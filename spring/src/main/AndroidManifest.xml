@@ -3,18 +3,17 @@
     package="com.xdroid.spring">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <!--        android:icon="@mipmap/ic_launcher"-->
-<!--    android:roundIcon="@mipmap/ic_launcher_round"-->
-<!--    android:theme="@style/Theme.Xdspring"-->
+    <!--    android:icon="@mipmap/ic_launcher"-->
+    <!--    android:roundIcon="@mipmap/ic_launcher_round"-->
+    <!--    android:theme="@style/Theme.Xdspring"-->
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true">
 
-        <activity android:name=".TestActivity"/>
+        <activity android:name=".TestActivity" />
         <activity android:name=".frames.zxing.app.CaptureActivity" />
 
     </application>
