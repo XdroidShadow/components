@@ -110,7 +110,7 @@ public class XDNets {
 
     }
 
-    private interface CallBack {
+    public interface CallBack {
         void onConnected(String message);
         void onUnConnected(String message);
     }
