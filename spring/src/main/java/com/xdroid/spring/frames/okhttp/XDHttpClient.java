@@ -9,6 +9,7 @@ import com.xdroid.spring.frames.okhttp.util.XDHttpsUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
@@ -20,6 +21,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.WebSocketListener;
 
 
 /**
@@ -102,7 +104,7 @@ public class XDHttpClient {
      * @param handle
      * @return
      */
-    public static<T> Call get(Request request, XDJsonHandle<T> handle) {
+    public static <T> Call get(Request request, XDJsonHandle<T> handle) {
         Call call = mOkHttpClient.newCall(request);
         //异步请求  传入带json解析的回调，参数是带解析类class的监听
         call.enqueue(handle);
@@ -117,10 +119,18 @@ public class XDHttpClient {
     }
 
     public static Call downloadFile(Request request, XDJsonHandle<File> handle) {
-        Log.e("下载进度","downloadFile");
+        Log.e("下载进度", "downloadFile");
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new XDFileCallback(handle));
         return call;
+    }
+
+    public static void startWebSocket(String url, WebSocketListener listener) {
+        OkHttpClient okHttpClient = getInstance();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        okHttpClient.newWebSocket(request, listener);
     }
 
 

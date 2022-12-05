@@ -116,6 +116,8 @@ public class XDTestRxJava {
 
     public static void testOKHttpWS() {
 
+        XDHttpClient.
+
         new Thread(() -> {
             String urlPath = String.format("ws://%s/aispeech/ws/car/%s", "58.210.212.107:8089", URLEncoder.encode("苏EKX257"));
             OkHttpClient okHttpClient = XDHttpClient.getOkHttpClient();
