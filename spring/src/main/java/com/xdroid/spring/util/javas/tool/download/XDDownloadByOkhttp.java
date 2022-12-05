@@ -27,11 +27,13 @@ public class XDDownloadByOkhttp extends XDDownloadTask implements Runnable {
     public void run() {
         XDFiles.isSupportBreakpointDownload(target.getUrlPath(), (isSupport, cLength) -> {
             try {
-                XDLog.e(TAG, "是否支持断点续传：", isSupport);
+                XDLog.i(TAG, "是否支持断点续传：", isSupport);
+                XDLog.i(TAG, "下载链接：", target.getUrlPath());
+                XDLog.i(TAG, "下载目录：", target.getDestinationPath());
                 //断点位置
                 long position = 0;
                 if (isSupport) position = Integer.parseInt(target.getBreakpoint());
-                XDLog.e(TAG, "断点：position = ", position);
+                XDLog.i(TAG, "断点：position = ", position);
                 callBack.onStart("run");
 
                 Request request = new Request.Builder()
@@ -42,7 +44,7 @@ public class XDDownloadByOkhttp extends XDDownloadTask implements Runnable {
                 Response response = call.execute();
                 //文件总长度
                 long contentLength = response.body().contentLength();
-                XDLog.e(TAG, "web响应码：", response.code());
+                XDLog.i(TAG, "web响应码：", response.code());
 
                 InputStream appData = response.body().byteStream();
                 RandomAccessFile rw = new RandomAccessFile(target.getDestinationPath(), "rwd");
@@ -52,11 +54,11 @@ public class XDDownloadByOkhttp extends XDDownloadTask implements Runnable {
                 while ((dataLen = appData.read(temp)) > 0) {
                     position += dataLen;
                     rw.write(temp, 0, dataLen);
-                    callBack.onDownloading(position, contentLength);
                     int current = (int) (position * 100 / contentLength);
                     if (percent != current) {
                         percent = current;
-                        XDLog.e(TAG, "onDownloading", position, "/", contentLength, current, "%");
+                        XDLog.i(TAG, "onDownloading", position, "/", contentLength, current, "%");
+                        callBack.onDownloading(position, contentLength);
                     }
                 }
                 appData.close();

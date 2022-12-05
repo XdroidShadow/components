@@ -222,6 +222,7 @@ public class XDFiles {
                 int contentLength = urlConnection.getContentLength();
                 urlConnection.disconnect();
                 if (responseCode == HttpURLConnection.HTTP_PARTIAL) {
+                    //只有206，部分成功才支持
                     emitter.onNext(new XDCheckBean(true, contentLength));
                 } else {
                     emitter.onNext(new XDCheckBean(false, contentLength));

@@ -105,16 +105,14 @@ public class XDNets {
         if (isConnected){
             callBack.onConnected(message);
         }else {
-            Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
             callBack.onUnConnected(message);
         }
 
     }
 
-    public interface CallBack {
+    private interface CallBack {
         void onConnected(String message);
         void onUnConnected(String message);
     }
-
 
 }

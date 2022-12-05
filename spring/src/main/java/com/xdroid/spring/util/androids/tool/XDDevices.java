@@ -53,7 +53,7 @@ public class XDDevices {
     }
 
 
-    /**
+    /**XDNetTool
      *   硬件 - 磁盘大小
      */
     public static String devRom() {
