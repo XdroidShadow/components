@@ -2,11 +2,14 @@ package com.xdroid.spring.util.androids.tool;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Environment;
+import android.os.StatFs;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.xdroid.spring.util.androids.bean.XDDeviceBounds;
+import com.xdroid.spring.util.javas.tool.XDUnits;
 
 /**
  * 安卓设备工具
@@ -47,6 +50,19 @@ public class XDDevices {
         int screenWidth = (int) (width / density);  // 屏幕宽度(dp)
         int screenHeight = (int) (height / density);// 屏幕高度(dp)
         return new XDDeviceBounds(screenWidth, screenHeight);
+    }
+
+
+    /**
+     *   硬件 - 磁盘大小
+     */
+    public static String devRom() {
+        StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getPath());
+        //块大小
+        long blockSize = statFs.getBlockSize();
+        //可用块数量
+        long availableCount = statFs.getAvailableBlocks();
+        return  XDUnits.formatFileSize(blockSize * availableCount);
     }
 
 

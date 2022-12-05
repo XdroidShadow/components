@@ -32,10 +32,12 @@ import com.xdroid.annotation.XDModify;
 import com.xdroid.annotation.XDTip;
 import com.xdroid.spring.frames.zxing.app.CaptureActivity;
 import com.xdroid.spring.frames.zxing.util.ZxingCode;
+import com.xdroid.spring.util.androids.tool.XDCaches;
 import com.xdroid.spring.util.androids.tool.XDLog;
 import com.xdroid.spring.util.androids.ui.dialog.XDDialog;
 import com.xdroid.spring.util.androids.ui.dialog.XDMask;
 import com.xdroid.spring.util.androids.ui.popwindow.XDPopupWindows;
+import com.xdroid.spring.util.javas.tool.XDFiles;
 import com.xdroid.spring.util.javas.tool.zip.test.XDZipsTest;
 
 import org.greenrobot.eventbus.EventBus;

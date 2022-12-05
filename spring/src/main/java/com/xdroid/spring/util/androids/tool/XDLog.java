@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  */
 
 public class XDLog {
-    private static String TAG = "TSHLog";
+    private static String TAG = "XDLog";
 
     public static final int RELEASE = 1;
     public static final int VERBOSE = 2;
