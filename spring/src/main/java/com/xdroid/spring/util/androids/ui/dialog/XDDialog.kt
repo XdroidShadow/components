@@ -43,8 +43,10 @@ class XDDialog : Dialog {
         this.isCanHide = isCanHide
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle) {
+    /**
+     *   这个 Bundle 会有空指针
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window!!.setBackgroundDrawableResource(R.color.transparent)
         dialog = layoutInflater.inflate(R.layout.dialog_alert_layout, null)

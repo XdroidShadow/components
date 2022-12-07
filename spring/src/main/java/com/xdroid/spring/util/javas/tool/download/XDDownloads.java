@@ -24,9 +24,7 @@ public class XDDownloads implements IXDDownloads {
     public static XDDownloads getInstance() {
         if (INSTANCE == null) {
             synchronized (XDDownloads.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new XDDownloads();
-                }
+                if (INSTANCE == null) INSTANCE = new XDDownloads();
             }
         }
         return INSTANCE;

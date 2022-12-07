@@ -25,7 +25,7 @@ public class XDSharedPreferences {
 
     public static XDSharedPreferences getInstance(Context context) {
         if (tshManager == null) {
-            synchronized (tshManager) {
+            synchronized (XDSharedPreferences.class) {
                 if (tshManager == null) {
                     tshManager = new XDSharedPreferences(context);
                 }
