@@ -5,22 +5,23 @@ import com.google.gson.Gson;
 
 public class XDGsons {
 
-    private static XDGsons instance;
+    private static Gson instance;
 
     private XDGsons() {
     }
 
-    public static XDGsons getInstance() {
+    public static Gson getInstance() {
         if (instance == null) {
             synchronized (XDGsons.class) {
-                if (instance == null) instance = new XDGsons();
+                if (instance == null) instance = new Gson();
             }
         }
         return instance;
     }
 
-    public void test() {
-
+    public void getType() {
+        new TypeToken<String>() {
+        }.getType();
     }
 
 
