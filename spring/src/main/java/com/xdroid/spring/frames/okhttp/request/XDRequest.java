@@ -27,6 +27,15 @@ public class XDRequest {
     public static Gson gson = new Gson();
     private static final String TAG = "XDRequest";
 
+
+    /**
+     * 创建带参数的请求（post）
+     */
+    public static Request createPostRequest(String url) {
+        return createPostRequest(url, new XDParams(), null);
+    }
+
+
     /**
      * 创建带参数的请求（post）
      */
