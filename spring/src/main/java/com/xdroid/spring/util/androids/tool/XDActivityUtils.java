@@ -20,4 +20,12 @@ public class XDActivityUtils {
         transaction.commit();
     }
 
+    public static void removeFragmentFromActivity(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment) {
+        FragmentTransaction transaction = Objects.requireNonNull(fragmentManager).beginTransaction();
+        if (fragment.isAdded()) {
+            transaction.remove(fragment);
+        }
+        transaction.commit();
+    }
+
 }
