@@ -74,6 +74,13 @@ public class XDRequest {
     /**
      * 创建带参数的请求（get）
      */
+    public static Request createGetRequest(String url) {
+        return createGetRequest(url, new XDParams(), null);
+    }
+
+    /**
+     * 创建带参数的请求（get）
+     */
     public static Request createGetRequest(String url, XDParams params) {
         return createGetRequest(url, params, null);
     }
