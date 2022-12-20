@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Objects;
 
-
 public class XDActivityUtils {
     private static final String TAG = "XDActivityUtils";
 

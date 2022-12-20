@@ -25,7 +25,6 @@ data class XDCrashHandler(var mContext: Context) : UncaughtExceptionHandler {
 
     fun init() {
         createLogFiles(mContext)
-
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler(this)
 //        testCrash()
@@ -123,7 +122,6 @@ data class XDCrashHandler(var mContext: Context) : UncaughtExceptionHandler {
         pw.flush()
         return sw.toString()
     }
-
 
 
 }

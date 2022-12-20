@@ -1,12 +1,11 @@
 package com.xd.spring.test.rxjava;
 
-
-import com.xd.spring.test.XDApplication;
 import com.xd.spring.test.rxjava.events.XDEvent1;
 import com.xd.spring.test.rxjava.events.XDEvent2;
 import com.xdroid.spring.frames.okhttp.XDHttpClient;
 import com.xdroid.spring.frames.okhttp.exception.XDHttpErrType;
 import com.xdroid.spring.frames.okhttp.listener.XDDataListener;
+import com.xdroid.spring.frames.okhttp.request.XDParams;
 import com.xdroid.spring.util.androids.tool.XDLog;
 import com.xdroid.spring.util.javas.tool.XDFiles;
 import com.xdroid.spring.util.javas.tool.download.XDDownloadBean;
@@ -47,6 +46,8 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -55,6 +56,7 @@ import okhttp3.WebSocketListener;
 import okio.ByteString;
 
 import static com.xdroid.spring.frames.okhttp.listener.XDJsonHandle.createJsonHandler;
+import static com.xdroid.spring.frames.okhttp.request.XDRequest.createGetRequest;
 import static com.xdroid.spring.frames.okhttp.request.XDRequest.createPostJSONRequest;
 
 /**
@@ -81,9 +83,59 @@ public class XDTestRxJava {
 //        testURL();
 //        testOKHttpWS();
 
-        testDownloadByOkhttp();
+//        testDownloadByOkhttp();
+
+//        testMiyun();
+
+        testMIyunchange();
+    }
+
+    public static void testMiyun() {
+        String url = "http://121.196.201.50:80/miyun/appManager/getAssetsUnitMap.do";
+
+//        String url = "http://39.105.38.116:8080/miyun/appManager/appLogin.do";//?userCode=dmf&passWord=dmf
+        XDHttpClient.get(createGetRequest(url, new XDParams() {
+        }), createJsonHandler(String.class, new XDDataListener<String>() {
+            @Override
+            public void onSuccess(String res) {
+                XDLog.e(TAG, "onSuccess", res);
+            }
+
+            @Override
+            public void onFailure(XDHttpErrType err) {
+                XDLog.e(TAG, "onFailure", "");
+            }
+        }));
 
 
+    }
+
+
+    /**
+     * get异步请求
+     */
+    private static void testMIyunchange() {
+
+        String url = "http://121.196.201.50:80/miyun/appManager/getAssetsUnitMap.do";
+        OkHttpClient mOkHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS).build();
+        Request request = new Request.Builder()
+                .url(url)
+                .method("GET", null)
+                .build();
+        mOkHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                XDLog.e(TAG, "onFailure");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                XDLog.e(TAG, "onSuccess");
+            }
+        });
     }
 
     public void testOkhttpErr() {
@@ -118,7 +170,7 @@ public class XDTestRxJava {
 
         new Thread(() -> {
             String urlPath = String.format("ws://%s/aispeech/ws/car/%s", "58.210.212.107:8089", URLEncoder.encode("苏EKX257"));
-            OkHttpClient okHttpClient = XDHttpClient.getOkHttpClient();
+            OkHttpClient okHttpClient = XDHttpClient.getInstance();
             Request request = new Request.Builder()
                     .url(urlPath)
                     .build();

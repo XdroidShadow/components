@@ -2,7 +2,7 @@
 package com.xd.spring;
 
 // Declare any non-default types here with import statements
-
+import com.xd.spring.Person;
 interface IXdroidAidlInterface {
     /**
      * Demonstrates some basic types that you can use as parameters
@@ -12,6 +12,10 @@ interface IXdroidAidlInterface {
 
       int count (in List<String> data);
 
-
        List<String> getListData();
+
+       List<Person> getPersons();
+
+       void  setPerson(in Person p);
+
 }

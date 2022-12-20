@@ -1,4 +1,4 @@
-package com.xd.spring.aidlTest.servers;
+package com.xd.spring;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -32,6 +32,7 @@ public class Person implements Parcelable {
         }
     };
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -41,5 +42,13 @@ public class Person implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
         parcel.writeInt(age);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

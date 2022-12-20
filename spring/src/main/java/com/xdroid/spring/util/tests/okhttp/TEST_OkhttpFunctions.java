@@ -45,7 +45,6 @@ import okhttp3.internal.http.RealInterceptorChain;
 public class TEST_OkhttpFunctions {
     OkHttpClient mOkHttpClient = null;
 
-
     public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
     public static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
@@ -246,12 +245,13 @@ public class TEST_OkhttpFunctions {
     }
 
     /**
-     *   Gson解析
+     * Gson解析
      */
-    private void testGson(){
+    private void testGson() {
 
-        Type type = new TypeToken<ArrayList<String>>() { }.getType();
-        new Gson().fromJson("",type);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        new Gson().fromJson("", type);
     }
 
 }

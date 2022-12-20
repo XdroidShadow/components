@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat;
 
 import com.xd.spring.R;
 import com.xd.spring.databinding.ActivityTest2Binding;
+import com.xd.spring.test.leak.XDLeaks;
 import com.xd.spring.test.rxjava.XDTestRxJava;
 import com.xd.spring.test.rxjava.events.XDEvent1;
 import com.xd.spring.test.rxjava.events.XDEvent2;
@@ -44,6 +45,8 @@ public class IndexActivity2 extends AppCompatActivity {
     private static final String TAG = "IndexActivity2";
     ActivityTest2Binding binding;
 
+    private XDLeaks leaks ;
+
 
 
     @Override
@@ -59,6 +62,8 @@ public class IndexActivity2 extends AppCompatActivity {
 
         ViewCompat.setTransitionName(binding.page2Img, "shareIMG");
         ViewCompat.setTransitionName(binding.page2Img2, "shareIMG2");
+
+        leaks = XDLeaks.newInstance(this);
     }
 
 

@@ -4,7 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.os.TraceCompat;
 import androidx.core.util.Pair;
+import androidx.core.view.LayoutInflaterCompat;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,11 +16,19 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.transition.Fade;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.PopupWindow;
 
@@ -26,10 +36,16 @@ import android.widget.PopupWindow;
 import com.google.common.base.Supplier;
 import com.xd.spring.R;
 import com.xd.spring.databinding.ActivityMainBinding;
+import com.xd.spring.test.rxjava.XDTestRxJava;
 import com.xd.spring.test.rxjava.events.XDEvent1;
 import com.xdroid.annotation.XDImportant;
 import com.xdroid.annotation.XDModify;
 import com.xdroid.annotation.XDTip;
+import com.xdroid.spring.codedesign.launchstarter.XDTaskLauncher;
+import com.xdroid.spring.codedesign.launchstarter.XDTaskLauncherDelayed;
+import com.xdroid.spring.codedesign.launchstarter.task.XDTask;
+import com.xdroid.spring.codedesign.launchstarter.task.XDMainTask;
+import com.xdroid.spring.codedesign.launchstarter.task.XDTask;
 import com.xdroid.spring.frames.zxing.app.CaptureActivity;
 import com.xdroid.spring.frames.zxing.util.ZxingCode;
 import com.xdroid.spring.util.androids.tool.XDCaches;
@@ -43,6 +59,7 @@ import com.xdroid.spring.util.javas.tool.zip.test.XDZipsTest;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -61,12 +78,77 @@ public class IndexActivity extends AppCompatActivity {
     private static final String TAG = "IndexActivity";
 
     ActivityMainBinding binding;
-    Handler handler = new Handler(Looper.getMainLooper());
+    Handler handler = new Handler(Looper.getMainLooper()) {
+
+    };
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //必须在 setContentView 之前调用
+        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new LayoutInflater.Factory2() {
+            @Override
+            public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+
+                XDLog.e(TAG, "name = ", name);
+                if (TextUtils.equals(name, "TextView")) {
+                    // 生成自定义TextView
+                }
+                long time = System.currentTimeMillis();
+                View view = getDelegate().createView(parent, name, context, attrs);
+                XDLog.e(name + " cost " + (System.currentTimeMillis() - time));
+                return view;
+            }
+
+            @Override
+            public View onCreateView(String name, Context context, AttributeSet attrs) {
+                return null;
+            }
+        });
+
         super.onCreate(savedInstanceState);
+
+
+        XDTaskLauncher.newInstance(this).addTasks(
+                new XDMainTask() {
+                    @Override
+                    public void run() {
+                        XDLog.e(TAG, "启动器，线程 = ", Thread.currentThread().getName());
+                    }
+                },
+                new XDTask() {
+                    @Override
+                    public void run() {
+                        XDLog.e(TAG, "启动器，线程 = ", Thread.currentThread().getName());
+                    }
+                }
+        ).start();
+
+        XDLog.e(TAG, "delay启动器，线程 = ", Thread.currentThread().getName(), "开始");
+        new XDTaskLauncherDelayed().addTask(new XDTask() {
+            @Override
+            public void run() {
+                XDLog.e(TAG, "delay启动器，线程 = ", Thread.currentThread().getName());
+            }
+        })
+                .addTask(new XDTask() {
+                    @Override
+                    public void run() {
+                        XDLog.e(TAG, "delay启动器，线程 = ", Thread.currentThread().getName());
+                    }
+                }).start();
+        XDLog.e(TAG, "delay启动器，线程 = ", Thread.currentThread().getName(), "结束");
+
+
+//        File traceFile = new File( Environment.getExternalStorageDirectory(),"app.trace");
+        File traceFile = new File("data/data/com.xd.spring/files", "app.trace");
+
+        XDLog.e(TAG, "trace路径：", traceFile.getAbsolutePath());
+
+        TraceCompat.beginSection("xdroid");
+//        Debug.startMethodTracing("app.trace");
+
         //使用淡入淡出效果
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         getWindow().setExitTransition(new Fade());
@@ -75,14 +157,21 @@ public class IndexActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+//        Debug.stopMethodTracing();
+        TraceCompat.endSection();
 
-//        binding.btn1.setOnClickListener(this::testTransition);
-        binding.btn1.setOnClickListener(this::testService);
+        binding.btn1.setOnClickListener(this::testTransition);
+//        binding.btn1.setOnClickListener(this::testService);
 //        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
 
 //        XDTests.test();
 
-//        XDTestRxJava.test();
+
+        XDTestRxJava.test();
+
+        testMask();
+//        testPopWindow();
+
 
         //异常监听
 //        new XDCrashHandler(this).init();
@@ -101,19 +190,59 @@ public class IndexActivity extends AppCompatActivity {
 
 //        XDTestGeneric.testZip();
 //        XDZipsTest.testZip();
-        XDZipsTest.testUnZip_dir();
+//        XDZipsTest.testUnZip_dir();
+//
+//        ArrayList<String> data = new ArrayList<>();
+//        Supplier<Boolean> booleanSupplier = data::isEmpty;
+//
+//        XDDialog xdDialog = new XDDialog(this, "", "", new XDDialog.CallBack() {
+//            @Override
+//            public void onPositiveClick() {
+//
+//            }
+//        });
 
-        ArrayList<String> data = new ArrayList<>();
-        Supplier<Boolean> booleanSupplier = data::isEmpty;
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                XDLog.e(TAG, "循环OOM，XDData");
+//                for (int index = 0; index <= 100; index++) {
+//                    XDData[] data = new XDData[10000];
+//                }
+//                handler.postDelayed(this, 100);
+//            }
+//        }, 100);
 
-        XDDialog xdDialog = new XDDialog(this, "", "", new XDDialog.CallBack() {
-            @Override
-            public void onPositiveClick() {
-
-            }
-        });
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+    }
+
+
+    private static class XDData {
+        private String name = "name";
+        private String info = "info";
+    }
+
 
     /**
      * 转场动画
@@ -177,7 +306,7 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     private void testMask() {
-        new XDMask(this).show();
+//        new XDMask(this).show();
     }
 
     @Subscribe()
@@ -204,4 +333,12 @@ public class IndexActivity extends AppCompatActivity {
         }
 
     }
+
+
+    private void test() {
+
+
+    }
+
+
 }
