@@ -1,9 +1,11 @@
 package com.xd.spring.test;
 
+import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.xdroid.spring.util.androids.tool.XDLog;
@@ -19,6 +21,7 @@ import java.util.concurrent.Executors;
 public class XDApplication extends Application {
     private static final String TAG = "XDApplication";
     private static XDApplication app;
+    private static int appState = 0;
 
     private CountDownLatch countDownLatch = new CountDownLatch(2);
     private ExecutorService executorService = Executors.newCachedThreadPool();
@@ -51,10 +54,12 @@ public class XDApplication extends Application {
         anrWatchDog.setANRListener(new ANRWatchDog.ANRListener() {
             @Override
             public void onAppNotResponding(@NonNull @NotNull ANRError error) {
-                XDLog.e(TAG,"触发了ANR，需要进行业务上报");
+                XDLog.e(TAG, "触发了ANR，需要进行业务上报");
             }
         });
         anrWatchDog.start();
+
+        testActivityLifecycle();
 
     }
 
@@ -106,4 +111,9 @@ public class XDApplication extends Application {
 
 
     }
+
+    public void testActivityLifecycle() {
+
+    }
+
 }

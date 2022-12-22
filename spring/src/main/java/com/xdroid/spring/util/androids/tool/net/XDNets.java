@@ -1,15 +1,26 @@
-package com.xdroid.spring.util.androids.tool;
+package com.xdroid.spring.util.androids.tool.net;
 
+import android.app.usage.NetworkStats;
+import android.app.usage.NetworkStatsManager;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
-import android.widget.Toast;
+import android.os.RemoteException;
+
+import androidx.annotation.NonNull;
 
 import com.xdroid.spring.util.androids.tool.XDLog;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
 /**
- *   网络工具
+ * 网络工具
  */
 public class XDNets {
     private static final String TAG = "TSHNetTool";
@@ -100,18 +111,86 @@ public class XDNets {
                 isConnected = false;
             }
         }
-        XDLog.e(TAG,"网络连接状态："+isConnected + "   信息："+ message);
+        XDLog.e(TAG, "网络连接状态：" + isConnected + "   信息：" + message);
 
-        if (isConnected){
+        if (isConnected) {
             callBack.onConnected(message);
-        }else {
+        } else {
             callBack.onUnConnected(message);
         }
 
     }
 
+    /**
+     * 统计 wifi+手机流量
+     */
+    public static long countMobileTraffic(Context context, long startTime, long endTime) {
+        return countMobileTrafficByWifi(context, startTime, endTime)
+                + countMobileTrafficByCellular(context, startTime, endTime);
+    }
+
+    /**
+     * wifi流量
+     */
+    public static long countMobileTrafficByWifi(Context context, long startTime, long endTime) {
+        return countTraffic(context, startTime, endTime, NetworkCapabilities.TRANSPORT_WIFI);
+    }
+
+    /**
+     * 手机流量
+     */
+    public static long countMobileTrafficByCellular(Context context, long startTime, long endTime) {
+        return countTraffic(context, startTime, endTime, NetworkCapabilities.TRANSPORT_CELLULAR);
+    }
+
+    private volatile static int appUid = -1;
+
+    private static long countTraffic(@NotNull Context context, long startTime, long endTime, int type) {
+        Objects.requireNonNull(context);
+        long netDataReceived = 0;
+        long netDataSend = 0;
+        NetworkStatsManager manager = (NetworkStatsManager) context.getSystemService(Context.NETWORK_STATS_SERVICE);
+        NetworkStats networkStats = null;
+        try {
+            networkStats = manager.querySummary(type, null, startTime, endTime);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        if (networkStats == null) return 0L;
+
+        NetworkStats.Bucket bucket = new NetworkStats.Bucket();
+        int appUid = getAppUid(context);
+        while (networkStats.hasNextBucket()) {
+            networkStats.getNextBucket(bucket);
+            if (appUid == bucket.getUid()) {
+                netDataReceived += bucket.getRxBytes();
+                netDataSend += bucket.getTxBytes();
+            }
+        }
+        String tag = type == NetworkCapabilities.TRANSPORT_WIFI ? "WIFI" : "移动网络";
+        XDLog.e(TAG, tag, "上传流量：", netDataSend);
+        XDLog.e(TAG, tag, "下载流量：", netDataReceived);
+        return netDataReceived + netDataSend;
+    }
+
+    private static int getAppUid(Context context) {
+        if (appUid == -1) {
+            PackageManager packageManager = context.getApplicationContext().getPackageManager();
+            try {
+                PackageInfo packageInfo = packageManager.getPackageInfo(context.getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
+                if (packageInfo != null) {
+                    appUid = packageInfo.applicationInfo.uid;
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return appUid;
+    }
+
     public interface CallBack {
         void onConnected(String message);
+
         void onUnConnected(String message);
     }
 

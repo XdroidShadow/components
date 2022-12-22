@@ -73,7 +73,7 @@ public class IndexActivity extends AppCompatActivity {
         test();
         testStrictMode();
         testLock();
-        testANR();
+//        testANR();
 
 //        AsyncLayoutInflater
 
