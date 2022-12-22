@@ -3,8 +3,14 @@ package com.xd.spring.test;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.squareup.leakcanary.LeakCanary;
 import com.xdroid.spring.util.androids.tool.XDLog;
+import com.xdroid.spring.util.androids.tool.anr.ANRError;
+import com.xdroid.spring.util.androids.tool.anr.ANRWatchDog;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -40,6 +46,15 @@ public class XDApplication extends Application {
 //        TaskDispatcher.newInstance(this).addTasks(
 //
 //        ).start();
+
+        ANRWatchDog anrWatchDog = new ANRWatchDog();
+        anrWatchDog.setANRListener(new ANRWatchDog.ANRListener() {
+            @Override
+            public void onAppNotResponding(@NonNull @NotNull ANRError error) {
+                XDLog.e(TAG,"触发了ANR，需要进行业务上报");
+            }
+        });
+        anrWatchDog.start();
 
     }
 

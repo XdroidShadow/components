@@ -1,5 +1,6 @@
 package com.xd.spring.test;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Message;
 import android.os.StrictMode;
 import android.transition.Fade;
 import android.util.Log;
@@ -361,7 +363,11 @@ public class IndexActivity extends AppCompatActivity {
         executorService.execute(() -> {
             //持有主线程的锁 20秒
             synchronized (IndexActivity.this) {
-                Thread.sleep(20 * 1000);
+                try {
+                    Thread.sleep(20 * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -373,6 +379,9 @@ public class IndexActivity extends AppCompatActivity {
         }, 1000);
 
 
+    }
+
+    public void testHandler() {
 
     }
 
