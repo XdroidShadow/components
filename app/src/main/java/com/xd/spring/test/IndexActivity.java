@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.os.TraceCompat;
 import androidx.core.util.Pair;
-import androidx.core.view.LayoutInflaterCompat;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -16,26 +15,18 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.text.TextUtils;
+import android.os.StrictMode;
 import android.transition.Fade;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.PopupWindow;
 
 
-import com.google.common.base.Supplier;
-import com.xd.spring.R;
-import com.xd.spring.databinding.ActivityMainBinding;
+import com.xd.spring.databinding.ActivityMain2Binding;
 import com.xd.spring.test.rxjava.XDTestRxJava;
 import com.xd.spring.test.rxjava.events.XDEvent1;
 import com.xdroid.annotation.XDImportant;
@@ -45,30 +36,19 @@ import com.xdroid.spring.codedesign.launchstarter.XDTaskLauncher;
 import com.xdroid.spring.codedesign.launchstarter.XDTaskLauncherDelayed;
 import com.xdroid.spring.codedesign.launchstarter.task.XDTask;
 import com.xdroid.spring.codedesign.launchstarter.task.XDMainTask;
-import com.xdroid.spring.codedesign.launchstarter.task.XDTask;
 import com.xdroid.spring.frames.zxing.app.CaptureActivity;
 import com.xdroid.spring.frames.zxing.util.ZxingCode;
-import com.xdroid.spring.util.androids.tool.XDCaches;
+import com.xdroid.spring.util.androids.tool.XDLayoutInflaters;
 import com.xdroid.spring.util.androids.tool.XDLog;
-import com.xdroid.spring.util.androids.ui.dialog.XDDialog;
-import com.xdroid.spring.util.androids.ui.dialog.XDMask;
 import com.xdroid.spring.util.androids.ui.popwindow.XDPopupWindows;
-import com.xdroid.spring.util.javas.tool.XDFiles;
-import com.xdroid.spring.util.javas.tool.zip.test.XDZipsTest;
+import com.xdroid.spring.util.javas.tool.XDUnits;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static com.xdroid.spring.frames.zxing.util.ZxingCode.REQUEST_CODE_QR;
@@ -77,7 +57,8 @@ import static com.xdroid.spring.frames.zxing.util.ZxingCode.REQUEST_CODE_QR;
 public class IndexActivity extends AppCompatActivity {
     private static final String TAG = "IndexActivity";
 
-    ActivityMainBinding binding;
+    //    ActivityMainBinding binding;
+    ActivityMain2Binding binding;
     Handler handler = new Handler(Looper.getMainLooper()) {
 
     };
@@ -85,30 +66,14 @@ public class IndexActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //必须在 setContentView 之前调用
-        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new LayoutInflater.Factory2() {
-            @Override
-            public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-
-                XDLog.e(TAG, "name = ", name);
-                if (TextUtils.equals(name, "TextView")) {
-                    // 生成自定义TextView
-                }
-                long time = System.currentTimeMillis();
-                View view = getDelegate().createView(parent, name, context, attrs);
-                XDLog.e(name + " cost " + (System.currentTimeMillis() - time));
-                return view;
-            }
-
-            @Override
-            public View onCreateView(String name, Context context, AttributeSet attrs) {
-                return null;
-            }
-        });
-
+        XDLayoutInflaters.countInflateTime(getLayoutInflater(), getDelegate());
         super.onCreate(savedInstanceState);
+        test();
+        testStrictMode();
+        testLock();
+        testANR();
 
+//        AsyncLayoutInflater
 
         XDTaskLauncher.newInstance(this).addTasks(
                 new XDMainTask() {
@@ -140,7 +105,6 @@ public class IndexActivity extends AppCompatActivity {
                 }).start();
         XDLog.e(TAG, "delay启动器，线程 = ", Thread.currentThread().getName(), "结束");
 
-
 //        File traceFile = new File( Environment.getExternalStorageDirectory(),"app.trace");
         File traceFile = new File("data/data/com.xd.spring/files", "app.trace");
 
@@ -154,7 +118,7 @@ public class IndexActivity extends AppCompatActivity {
         getWindow().setExitTransition(new Fade());
         getWindow().setExitTransition(new Fade());
         //view binding
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMain2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
 //        Debug.stopMethodTracing();
@@ -320,7 +284,6 @@ public class IndexActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_QR);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -334,8 +297,81 @@ public class IndexActivity extends AppCompatActivity {
 
     }
 
-
     private void test() {
+        try {
+            throw new RuntimeException("手动抛出异常");
+        } catch (Exception e) {
+            XDLog.e(TAG, Log.getStackTraceString(e));
+        }
+
+        XDLog.e(TAG, "CPU核心数量：", Runtime.getRuntime().availableProcessors());
+        XDLog.e(TAG, "maxMemory：", XDUnits.formatFileSize(Runtime.getRuntime().maxMemory()));
+        XDLog.e(TAG, "freeMemory：", XDUnits.formatFileSize(Runtime.getRuntime().freeMemory()));
+        XDLog.e(TAG, "totalMemory：", XDUnits.formatFileSize(Runtime.getRuntime().totalMemory()));
+
+    }
+
+    public void testStrictMode() {
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()// or .detectAll()for all detectable problems
+                .penaltyLog()
+                .build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .build());
+
+
+    }
+
+
+    ExecutorService executorService = Executors.newCachedThreadPool();
+    private Object flg1 = "flg1";
+    private Object flg2 = "flg2";
+
+    public void testLock() {
+//        executorService.execute(() -> {
+//            synchronized (flg1) {
+//                XDLog.e(TAG, "A-获得flg1");
+//                Thread.sleep(500);
+//                XDLog.e(TAG, "A-等待flg2");
+//                synchronized (flg2) {
+//                    XDLog.e(TAG, "A-获得flg2");
+//                }
+//            }
+//        });
+//
+//        executorService.execute(() -> {
+//            synchronized (flg2) {
+//                XDLog.e(TAG, "B-获得flg2");
+//                Thread.sleep(500);
+//                XDLog.e(TAG, "B-等待flg1");
+//                synchronized (flg1) {
+//                    XDLog.e(TAG, "B-获得flg1");
+//                }
+//            }
+//        });
+    }
+
+    public void testANR() {
+
+        executorService.execute(() -> {
+            //持有主线程的锁 20秒
+            synchronized (IndexActivity.this) {
+                Thread.sleep(20 * 1000);
+            }
+        });
+
+        handler.postDelayed(() -> {
+            //等子线程持有主线程锁后，尝试获取主线程锁
+            synchronized (IndexActivity.this) {
+                XDLog.e(TAG, "进入主线程");
+            }
+        }, 1000);
+
 
 
     }

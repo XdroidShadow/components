@@ -47,6 +47,8 @@
         android:largeHeap="true"
         android:theme="@style/Theme.Xdspring">
 
+<!--        android:largeHeap="true"-->
+
         <activity android:name=".test.IndexActivity">
 
             <intent-filter>

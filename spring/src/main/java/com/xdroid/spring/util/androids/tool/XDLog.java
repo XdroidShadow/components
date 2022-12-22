@@ -3,6 +3,7 @@ package com.xdroid.spring.util.androids.tool;
 import android.util.Log;
 
 import androidx.annotation.IntDef;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
@@ -13,6 +14,7 @@ import java.lang.annotation.Target;
 
 public class XDLog {
     private static String TAG = "XDLog";
+    private static String TAG_E = "XDLog_EXCEPTION";
 
     public static final int RELEASE = 1;
     public static final int VERBOSE = 2;
@@ -62,6 +64,21 @@ public class XDLog {
         }
     }
 
+    public static <T> void exception(String tag, Throwable e, T... args) {
+        if (logLevel >= ERROR) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(tag);
+            sb.append("/");
+            for (T info : args) {
+                sb.append(info);
+                sb.append(SEPARATOR);
+            }
+            sb.append("\n");
+            Log.e(TAG, sb.toString());
+        }
+        // TODO: 2022/12/21  需要将异常信息保存到文件中
+        Log.e(TAG_E, Log.getStackTraceString(e));
+    }
 
     public static <T> void i(String tag, T... args) {
         if (logLevel >= INFO) {
