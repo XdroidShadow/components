@@ -1,6 +1,5 @@
 package com.xd.spring.test;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,14 +16,15 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.Message;
 import android.os.StrictMode;
 import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
 import android.widget.PopupWindow;
 
 
@@ -40,13 +40,18 @@ import com.xdroid.spring.codedesign.launchstarter.task.XDTask;
 import com.xdroid.spring.codedesign.launchstarter.task.XDMainTask;
 import com.xdroid.spring.frames.zxing.app.CaptureActivity;
 import com.xdroid.spring.frames.zxing.util.ZxingCode;
+import com.xdroid.spring.util.androids.tool.XDDevices;
+import com.xdroid.spring.util.androids.tool.XDDimensions;
 import com.xdroid.spring.util.androids.tool.XDLayoutInflaters;
 import com.xdroid.spring.util.androids.tool.XDLog;
 import com.xdroid.spring.util.androids.ui.popwindow.XDPopupWindows;
+import com.xdroid.spring.util.javas.tool.XDTimes;
 import com.xdroid.spring.util.javas.tool.XDUnits;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,9 +66,15 @@ public class IndexActivity extends AppCompatActivity {
 
     //    ActivityMainBinding binding;
     ActivityMain2Binding binding;
+
     Handler handler = new Handler(Looper.getMainLooper()) {
 
     };
+
+
+
+    HandlerThread handlerThread = new HandlerThread("test");
+    Handler handlerChild ;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -74,6 +85,7 @@ public class IndexActivity extends AppCompatActivity {
         testStrictMode();
         testLock();
 //        testANR();
+
 
 //        AsyncLayoutInflater
 
@@ -126,7 +138,11 @@ public class IndexActivity extends AppCompatActivity {
 //        Debug.stopMethodTracing();
         TraceCompat.endSection();
 
-        binding.btn1.setOnClickListener(this::testTransition);
+//        binding.btn1.setOnClickListener(this::testTransition);
+        binding.btn1.setOnClickListener(this::testHandler);
+
+
+
 //        binding.btn1.setOnClickListener(this::testService);
 //        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
 
@@ -311,6 +327,16 @@ public class IndexActivity extends AppCompatActivity {
         XDLog.e(TAG, "freeMemory：", XDUnits.formatFileSize(Runtime.getRuntime().freeMemory()));
         XDLog.e(TAG, "totalMemory：", XDUnits.formatFileSize(Runtime.getRuntime().totalMemory()));
 
+
+        try {
+            XDLog.e(TAG,"action是否为空：开始");
+            JSONObject nativeCmdJO = new JSONObject("{}");
+            String action = nativeCmdJO.optString("action");
+            XDLog.e(TAG,"action是否为空：","打开".equals(action),"   action = [",action+"]");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void testStrictMode() {
@@ -381,9 +407,43 @@ public class IndexActivity extends AppCompatActivity {
 
     }
 
-    public void testHandler() {
+    private volatile boolean checkFlag  = false;
+    Runnable TimeoutCheckTask = new Runnable() {
+        @Override
+        public void run() {
+            checkFlag = true;
+            XDLog.e(TAG,"超时了");
+        }
+    };
+
+    public  void testHandler(View v) {
+        handlerThread.start();
+        handlerChild = new Handler(handlerThread.getLooper());
+
+        handlerChild.postDelayed(()->{
+            checkFlag = true;
+            XDLog.e(TAG,"数据更新成功啦！开始通知车机");
+
+        },3*1000);
+
+        XDLog.e(TAG,"start查询", XDTimes.currentTimeString());
+        handlerChild.postDelayed(TimeoutCheckTask,10*1000);
+        while (!checkFlag){
+            try {
+                Thread.sleep(350);
+                XDLog.e(TAG,"查询ing", XDTimes.currentTimeString());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        handlerChild.removeCallbacks(TimeoutCheckTask);
+        XDLog.e(TAG,"end查询", XDTimes.currentTimeString());
+
+
 
     }
+
+
 
 
 }
